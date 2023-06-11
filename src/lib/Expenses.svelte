@@ -1,5 +1,8 @@
 <script>
   import Form from "./Form.svelte";
+  import { roi } from "./store";
+
+  const { expenses } = $roi;
 </script>
 
 <div class="Expenses square">

@@ -5,13 +5,15 @@
   import Header from "./lib/Header.svelte";
   import HouseInfo from "./lib/HouseInfo.svelte";
   import Income from "./lib/Income.svelte";
+  import Totals from "./lib/Totals.svelte";
 
   type TComponent =
     | "HouseInfo"
     | "Income"
     | "Expenses"
     | "CashFlow"
-    | "CashOnCashROI";
+    | "CashOnCashROI"
+    | "Totals";
 
   interface IComponent {
     prev: TComponent;
@@ -24,6 +26,7 @@
     Expenses: IComponent;
     CashFlow: IComponent;
     CashOnCashROI: IComponent;
+    Totals: IComponent;
   }
 
   let component: TComponent = "HouseInfo";
@@ -47,7 +50,11 @@
     },
     CashOnCashROI: {
       prev: "CashFlow",
-      next: "CashOnCashROI",
+      next: "Totals",
+    },
+    Totals: {
+      prev: "CashFlow",
+      next: "Totals",
     },
   };
 
@@ -72,6 +79,9 @@
     {#if component === "CashOnCashROI"}
       <CashOnCashRoi />
     {/if}
+    {#if component === "Totals"}
+      <Totals />
+    {/if}
     <div class="bottom-buttons">
       <div class="bottom-buttons__wrapper">
         <button on:click={() => (component = components[component].prev)}
@@ -89,5 +99,6 @@
     <Expenses />
     <CashFlow />
     <CashOnCashRoi />
+    <Totals />
   {/if}
 </main>

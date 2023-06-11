@@ -27,7 +27,8 @@
         name={squareKey}
         hasPercentage={$roi[square][squareKey].hasPercentage}
         percentageBasedOn={$roi[square][squareKey].percentageBasedOn}
-        percentageValue={$roi[square][squareKey].percentage || 10}
+        percentageValue={$roi[square][squareKey].percentage}
+        isPercentage={$roi[square][squareKey].isPercentage || false}
       />
     </div>
   {/each}

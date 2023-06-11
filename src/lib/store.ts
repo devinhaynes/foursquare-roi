@@ -37,7 +37,7 @@ export const roi = writable({
         square: "house-info",
         key: "house-cost"
       },
-      percentage: 10
+      percentage: 1
     },
     repairs: {
       value: 0,
@@ -85,10 +85,15 @@ export const roi = writable({
       hasPercentage: false
     }
   },
-  'cash-on-cash-roi': {
+  'investments': {
     'down-payment': {
       value: 0,
-      hasPercentage: false
+      hasPercentage: true,
+      percentageBasedOn: {
+        square: "house-info",
+        key: "house-cost"
+      },
+      percentage: 20
     },
     'closing-costs': {
       value: 0,
@@ -97,6 +102,21 @@ export const roi = writable({
     repairs: {
       value: 0,
       hasPercentage: false
+    }
+  },
+  totals: {
+    'annual-cashflow': {
+      get value() {return (getStore(roi).cashflow["monthly-income"].value - getStore(roi).cashflow["monthly-expenses"].value) * 12},
+      hasPercentage: false
+    },
+    'total-investment': {
+      get value() {return Object.values(getStore(roi).investments).map((entry: {value: number, hasPercentage: boolean}) => entry.value).reduce((a: number, b: number) => a + b)},
+      hasPercentage: false
+    },
+    'cash-on-cash-roi': {
+      get value() {return (getStore(roi).totals["annual-cashflow"].value / getStore(roi).totals["total-investment"].value) * 100},
+      hasPercentage: false,
+      isPercentage: true
     }
   }
 });

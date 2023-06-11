@@ -12,6 +12,7 @@
     square: "income",
     key: "rent",
   };
+  export let isPercentage = false;
 
   if (hasPercentage) {
     roi.set({
@@ -30,11 +31,14 @@
 
   function handleChange(e) {
     if (hasPercentage) {
+      // Handle Infinity error when based-on value is 0
       percentageValue = Math.floor(
         (e.target.value /
           $roi[percentageBasedOn.square][percentageBasedOn.key].value) *
           100
       );
+
+      if (percentageValue === Infinity) percentageValue = null;
 
       return roi.set({
         ...$roi,
@@ -97,6 +101,11 @@
       />
       <span>%</span>
     </div>
+  </div>
+{:else if isPercentage}
+  <div class="input">
+    <input {disabled} {value} class={name} type="number" />
+    <span>%</span>
   </div>
 {:else}
   <div class="input">

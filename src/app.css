@@ -67,13 +67,6 @@ button:focus-visible {
   height: 100vh;
 }
 
-main {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-
 
 input::-webkit-outer-spin-button,
       input::-webkit-inner-spin-button {
