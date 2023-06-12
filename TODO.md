@@ -5,6 +5,9 @@
 - [] Add Save a Property feature
 - [] Create Backend to handle CRUD operations
 - [] Refactor types
-- [] Deploy
-- [] Add PWA
+- [x] Deploy
+- [x] Add PWA
 - [] 508 Compliance
+- [] Modify bottom bar with icons
+- [] Move navigation buttons
+- [] Fix house info styling

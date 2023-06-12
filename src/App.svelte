@@ -6,6 +6,7 @@
   import HouseInfo from "./lib/HouseInfo.svelte";
   import Income from "./lib/Income.svelte";
   import Totals from "./lib/Totals.svelte";
+  import BottomBar from "./lib/BottomBar.svelte";
 
   type TComponent =
     | "HouseInfo"
@@ -61,7 +62,7 @@
   let view = "square";
 </script>
 
-<Header bind:view />
+<Header />
 <main>
   {#if view === "square"}
     {#if component === "HouseInfo"}
@@ -82,7 +83,7 @@
     {#if component === "Totals"}
       <Totals />
     {/if}
-    <div class="bottom-buttons">
+    <!-- <div class="bottom-buttons">
       <div class="bottom-buttons__wrapper">
         <button on:click={() => (component = components[component].prev)}
           >Prev</button
@@ -91,7 +92,7 @@
           >Next</button
         >
       </div>
-    </div>
+    </div> -->
   {/if}
   {#if view === "list"}
     <HouseInfo />
@@ -102,3 +103,4 @@
     <Totals />
   {/if}
 </main>
+<BottomBar bind:view />

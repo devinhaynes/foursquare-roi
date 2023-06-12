@@ -12,14 +12,14 @@
       <img src={logo} class="logo" alt="FourSquare Logo" />
       <span>ROI Calculator</span>
     </div>
-    <div class="header__view">
+    <!-- <div class="header__view">
       <button
         on:click={() =>
           view === "square" ? (view = "list") : (view = "square")}
       >
         <img src={view === "square" ? squareIcon : listIcon} alt="" />
       </button>
-    </div>
+    </div> -->
   </div>
 </div>
 
