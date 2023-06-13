@@ -5,7 +5,7 @@
 <div class="HouseInfo square">
   <h1 class="section-header">House Info</h1>
   <Form square="house-info" />
-  <form action="">
+  <!-- <form action="">
     <div class="form-group">
       <label for="">Street Address</label><input type="text" />
     </div>
@@ -21,7 +21,7 @@
     <div class="form-group">
       <label for="">Link</label><input type="text" />
     </div>
-  </form>
+  </form> -->
 </div>
 
 <style>
