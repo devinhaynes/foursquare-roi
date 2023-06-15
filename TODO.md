@@ -8,6 +8,11 @@
 - [x] Deploy
 - [x] Add PWA
 - [] 508 Compliance
-- [] Modify bottom bar with icons
-- [] Move navigation buttons
+- [x] Modify bottom bar with icons
+- [x] Move navigation buttons
+- [] Create remaining navigation icons
 - [] Fix house info styling
+- [] Change initial values to placeholders
+- [] Add help text
+- [] Add user preferences
+- [] Modify BEM styling since Svelte style are scoped

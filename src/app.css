@@ -22,7 +22,7 @@
   -webkit-text-size-adjust: 100%;
 
   --black: hsl(208, 37%, 20%);
-  --blue: hsl(242, 60%, 50%);
+  --blue: hsl(214, 69%, 39%);
   --gray: hsl(0, 0%, 66%);
   --max-width: 60em;
 }
@@ -81,27 +81,6 @@ input::-webkit-outer-spin-button,
   padding-inline: 10px;
   flex-grow: 1;
   padding-bottom: 75px;
-}
-
-.bottom-buttons {
-  background-color: white;
-  position: fixed;
-  bottom: 0;
-  width: 100vw;
-}
-
-.bottom-buttons button {
-  color: white;
-  padding: 0.5rem 1.5rem;
-}
-
-.bottom-buttons__wrapper {
-  padding: 0.5rem 10px;
-  max-width: var(--max-width);
-  margin-inline: auto;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
 }
 
 @media (prefers-color-scheme: light) {

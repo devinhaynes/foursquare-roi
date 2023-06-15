@@ -13,56 +13,15 @@
     | "Income"
     | "Expenses"
     | "CashFlow"
-    | "CashOnCashROI"
+    | "Investments"
     | "Totals";
-
-  interface IComponent {
-    prev: TComponent;
-    next: TComponent;
-  }
-
-  interface IComponents {
-    HouseInfo: IComponent;
-    Income: IComponent;
-    Expenses: IComponent;
-    CashFlow: IComponent;
-    CashOnCashROI: IComponent;
-    Totals: IComponent;
-  }
 
   let component: TComponent = "HouseInfo";
 
-  let components: IComponents = {
-    HouseInfo: {
-      prev: "HouseInfo",
-      next: "Income",
-    },
-    Income: {
-      prev: "HouseInfo",
-      next: "Expenses",
-    },
-    Expenses: {
-      prev: "Income",
-      next: "CashFlow",
-    },
-    CashFlow: {
-      prev: "Expenses",
-      next: "CashOnCashROI",
-    },
-    CashOnCashROI: {
-      prev: "CashFlow",
-      next: "Totals",
-    },
-    Totals: {
-      prev: "CashFlow",
-      next: "Totals",
-    },
-  };
-
-  let view = "square";
+  let view: "square" | "list" = "square";
 </script>
 
-<Header />
+<Header bind:view bind:component />
 <main>
   {#if view === "square"}
     {#if component === "HouseInfo"}
@@ -77,22 +36,12 @@
     {#if component === "CashFlow"}
       <CashFlow />
     {/if}
-    {#if component === "CashOnCashROI"}
+    {#if component === "Investments"}
       <CashOnCashRoi />
     {/if}
     {#if component === "Totals"}
       <Totals />
     {/if}
-    <!-- <div class="bottom-buttons">
-      <div class="bottom-buttons__wrapper">
-        <button on:click={() => (component = components[component].prev)}
-          >Prev</button
-        >
-        <button on:click={() => (component = components[component].next)}
-          >Next</button
-        >
-      </div>
-    </div> -->
   {/if}
   {#if view === "list"}
     <HouseInfo />
