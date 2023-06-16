@@ -1,56 +1,185 @@
 <script lang="ts">
-  import squareMethodIcon from "../assets/square-method-icon.svg";
-  import webIcon from "../assets/web-icon.svg";
-  import saveIcon from "../assets/save-icon.svg";
-  import favoriteIcon from "../assets/favorite-icon.svg";
-  import profileIcon from "../assets/profile-icon.svg";
-  import listIcon from "../assets/list-view-icon.svg";
-  import submitIcon from "../assets/submit-icon.svg";
+  import arrow from "../assets/arrow-icon.svg";
+  import house from "../assets/house-icon.svg";
+  import expenses from "../assets/expenses-icon.svg";
+  import income from "../assets/income-icon.svg";
+  import cashflow from "../assets/cashflow-icon.svg";
+  import investments from "../assets/investments-icon.svg";
+  import totals from "../assets/totals-icon.svg";
 
   export let view: "square" | "list";
 
-  function toggleWidget(element: string) {
-    const widget = document.querySelector(`.widget[data-widget=${element}`);
+  export let component: TComponent;
 
-    if (widget.getAttribute("data-active") == "true") {
-      widget.setAttribute("data-active", "false");
-      widget.removeAttribute("style");
-      return;
-    }
+  type TComponent =
+    | "HouseInfo"
+    | "Income"
+    | "Expenses"
+    | "CashFlow"
+    | "Investments"
+    | "Totals";
 
-    if (widget.getAttribute("data-active") == "false") {
-      widget.setAttribute("data-active", "true");
-      widget.setAttribute("style", "top: -100px;");
+  type TTarget =
+    | "prev"
+    | "next"
+    | "HouseInfo"
+    | "Income"
+    | "Expenses"
+    | "CashFlow"
+    | "Investments"
+    | "Totals";
+
+  interface IComponent {
+    prev: TComponent;
+    next: TComponent;
+  }
+
+  interface IComponents {
+    HouseInfo: IComponent;
+    Income: IComponent;
+    Expenses: IComponent;
+    CashFlow: IComponent;
+    Investments: IComponent;
+    Totals: IComponent;
+  }
+
+  let components: IComponents = {
+    HouseInfo: {
+      prev: "HouseInfo",
+      next: "Income",
+    },
+    Income: {
+      prev: "HouseInfo",
+      next: "Expenses",
+    },
+    Expenses: {
+      prev: "Income",
+      next: "CashFlow",
+    },
+    CashFlow: {
+      prev: "Expenses",
+      next: "Investments",
+    },
+    Investments: {
+      prev: "CashFlow",
+      next: "Totals",
+    },
+    Totals: {
+      prev: "CashFlow",
+      next: "Totals",
+    },
+  };
+
+  function handleNavigation(target: TTarget) {
+    switch (target) {
+      case "prev":
+        if (view === "square") {
+          component = components[component].prev;
+        }
+        break;
+      case "next":
+        if (view === "square") {
+          component = components[component].next;
+        }
+        break;
+      case "HouseInfo":
+        if (view === "square") {
+          component = "HouseInfo";
+        }
+        break;
+
+      case "Income":
+        if (view === "square") {
+          component = "Income";
+        }
+        break;
+      case "Expenses":
+        if (view === "square") {
+          component = "Expenses";
+        }
+        break;
+      case "CashFlow":
+        if (view === "square") {
+          component = "CashFlow";
+        }
+        break;
+      case "Investments":
+        if (view === "square") {
+          component = "Investments";
+        }
+        break;
+      case "Totals":
+        if (view === "square") {
+          component = "Totals";
+        }
+        break;
+      default:
+        return;
     }
   }
 </script>
 
 <div class="BottomBar">
-  <div class="bottom">
-    <ul class="wrapper">
-      <li>
-        <button on:click={() => toggleWidget("web")}>
-          <img src={webIcon} alt="" />
+  <div class="wrapper">
+    <ul>
+      <li class="nav-link">
+        <button class="nav-button" on:click={() => handleNavigation("prev")}>
+          <img class="nav-image arrow" src={arrow} alt="" />
         </button>
-        <form data-widget="web" data-active="false" class="widget">
-          <label for="">URL:</label>
-          <input type="text" />
-          <button><img src={submitIcon} alt="" /></button>
-        </form>
       </li>
-      <li>
+      <li class="nav-link">
         <button
-          on:click={() =>
-            view === "square" ? (view = "list") : (view = "square")}
-          ><img
-            src={view === "square" ? squareMethodIcon : listIcon}
-            alt=""
-          /></button
+          class="nav-button"
+          on:click={() => handleNavigation("HouseInfo")}
         >
+          <img class="nav-image" src={house} alt="" />
+          <span>House Info</span>
+        </button>
       </li>
-      <li><button><img src={saveIcon} alt="" /></button></li>
-      <li><button><img src={favoriteIcon} alt="" /></button></li>
-      <li><button><img src={profileIcon} alt="" /></button></li>
+      <li class="nav-link">
+        <button class="nav-button" on:click={() => handleNavigation("Income")}>
+          <img class="nav-image" src={income} alt="" />
+          <span>Income</span>
+        </button>
+      </li>
+      <li class="nav-link">
+        <button
+          class="nav-button"
+          on:click={() => handleNavigation("Expenses")}
+        >
+          <img class="nav-image" src={expenses} alt="" />
+          <span>Expenses</span>
+        </button>
+      </li>
+      <li class="nav-link">
+        <button
+          class="nav-button"
+          on:click={() => handleNavigation("CashFlow")}
+        >
+          <img class="nav-image" src={cashflow} alt="" />
+          <span>Cashflow</span>
+        </button>
+      </li>
+      <li class="nav-link">
+        <button
+          class="nav-button"
+          on:click={() => handleNavigation("Investments")}
+        >
+          <img class="nav-image" src={investments} alt="" />
+          <span>Investments</span>
+        </button>
+      </li>
+      <li class="nav-link">
+        <button class="nav-button" on:click={() => handleNavigation("Totals")}>
+          <img class="nav-image" src={totals} alt="" />
+          <span>Totals</span>
+        </button>
+      </li>
+      <li class="nav-link">
+        <button class="nav-button" on:click={() => handleNavigation("next")}>
+          <img class="nav-image arrow" src={arrow} alt="" />
+        </button>
+      </li>
     </ul>
   </div>
 </div>
@@ -64,10 +193,6 @@
     isolation: isolate;
   }
 
-  .bottom {
-    background-color: white;
-  }
-
   .wrapper {
     display: flex;
     justify-content: space-between;
@@ -76,62 +201,60 @@
     margin-inline: auto;
     padding: 0 10px;
     background-color: white;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
   }
 
-  .widget {
-    position: absolute;
-    top: 150%;
+  .nav-image {
+    max-width: 30px;
+  }
+
+  .arrow {
+    max-width: 1rem;
+  }
+
+  ul {
     display: flex;
+    gap: 0.25rem;
     align-items: center;
-    gap: 1rem;
-    background-color: white;
-    padding: 1rem;
-    border-radius: 0.75rem;
-    transition: top 250ms ease-in-out;
-    z-index: 3;
+    justify-content: space-around;
+    list-style: none;
+    padding-block: 1rem;
+    width: 100%;
   }
 
-  .widget::before {
-    content: "";
-    position: absolute;
-    left: 11px;
-    bottom: -14px;
-    height: 35px;
-    aspect-ratio: 1;
-    background-color: white;
-    rotate: 45deg;
-    z-index: -1;
-    border-radius: 0.25rem;
+  li:nth-child(1) .nav-image {
+    rotate: -90deg;
   }
 
-  .widget input {
-    padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-    border: 2px solid var(--black);
+  li:nth-last-child(1) .nav-image {
+    rotate: 90deg;
   }
 
-  .widget button {
-    background-color: var(--blue);
-    padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
-    border: 2px solid var(--black);
-  }
-
-  img {
-    max-height: 30px;
-  }
-
-  button {
-    padding: 1rem;
-    display: grid;
-    place-content: center;
-  }
-
-  button:active {
-    border-top: 2px solid red;
-  }
-
-  li {
+  .nav-button {
+    display: flex;
+    flex-direction: column;
     position: relative;
+  }
+
+  .nav-button > span {
+    font-size: 0.75rem !important;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    background-color: var(--black);
+    color: white;
+    position: absolute;
+    top: 0;
+    left: -50%;
+    padding: 0.5rem 1rem;
+    transform: translateY(calc(-100% + 0.25rem));
+    outline: 1px solid white;
+  }
+
+  .nav-button:hover > span {
+    width: auto;
+    height: auto;
+    opacity: 1;
   }
 </style>

@@ -1,118 +1,27 @@
 <script lang="ts">
   import logo from "../assets/logo.svg";
-  import arrow from "../assets/arrow-icon.svg";
-  import house from "../assets/house-icon.svg";
-  import expenses from "../assets/expenses-icon.svg";
-  import income from "../assets/income-icon.svg";
-  import cashflow from "../assets/cashflow-icon.svg";
+  import squareMethodIcon from "../assets/square-method-icon.svg";
+  import webIcon from "../assets/web-icon.svg";
+  import saveIcon from "../assets/save-icon.svg";
+  import favoriteIcon from "../assets/favorite-icon.svg";
+  import profileIcon from "../assets/profile-icon.svg";
+  import listIcon from "../assets/list-view-icon.svg";
+  import submitIcon from "../assets/submit-icon.svg";
 
   export let view;
-  export let component;
 
-  type TComponent =
-    | "HouseInfo"
-    | "Income"
-    | "Expenses"
-    | "CashFlow"
-    | "Investments"
-    | "Totals";
+  function toggleWidget(element: string) {
+    const widget = document.querySelector(`.widget[data-widget=${element}`);
 
-  type TTarget =
-    | "prev"
-    | "next"
-    | "HouseInfo"
-    | "Income"
-    | "Expenses"
-    | "CashFlow"
-    | "Investments"
-    | "Totals";
+    if (widget.getAttribute("data-active") == "true") {
+      widget.setAttribute("data-active", "false");
+      widget.removeAttribute("style");
+      return;
+    }
 
-  interface IComponent {
-    prev: TComponent;
-    next: TComponent;
-  }
-
-  interface IComponents {
-    HouseInfo: IComponent;
-    Income: IComponent;
-    Expenses: IComponent;
-    CashFlow: IComponent;
-    Investments: IComponent;
-    Totals: IComponent;
-  }
-
-  let components: IComponents = {
-    HouseInfo: {
-      prev: "HouseInfo",
-      next: "Income",
-    },
-    Income: {
-      prev: "HouseInfo",
-      next: "Expenses",
-    },
-    Expenses: {
-      prev: "Income",
-      next: "CashFlow",
-    },
-    CashFlow: {
-      prev: "Expenses",
-      next: "Investments",
-    },
-    Investments: {
-      prev: "CashFlow",
-      next: "Totals",
-    },
-    Totals: {
-      prev: "CashFlow",
-      next: "Totals",
-    },
-  };
-
-  function handleNavigation(target: TTarget) {
-    switch (target) {
-      case "prev":
-        if (view === "square") {
-          component = components[component].prev;
-        }
-        break;
-      case "next":
-        if (view === "square") {
-          component = components[component].next;
-        }
-        break;
-      case "HouseInfo":
-        if (view === "square") {
-          component = "HouseInfo";
-        }
-        break;
-
-      case "Income":
-        if (view === "square") {
-          component = "Income";
-        }
-        break;
-      case "Expenses":
-        if (view === "square") {
-          component = "Expenses";
-        }
-        break;
-      case "CashFlow":
-        if (view === "square") {
-          component = "CashFlow";
-        }
-        break;
-      case "Investments":
-        if (view === "square") {
-          component = "Investments";
-        }
-        break;
-      case "Totals":
-        if (view === "square") {
-          component = "Totals";
-        }
-        break;
-      default:
-        return;
+    if (widget.getAttribute("data-active") == "false") {
+      widget.setAttribute("data-active", "true");
+      widget.setAttribute("style", "top: 75px;");
     }
   }
 </script>
@@ -125,51 +34,34 @@
     </div>
     {#if view === "square"}
       <div class="bottom">
-        <ul>
+        <ul class="wrapper">
           <li>
-            <button on:click={() => handleNavigation("prev")}>
-              <img class="nav-image arrow" src={arrow} alt="" />
+            <button on:click={() => toggleWidget("web")}>
+              <img src={webIcon} alt="" />
             </button>
           </li>
           <li>
-            <button on:click={() => handleNavigation("HouseInfo")}>
-              <img class="nav-image" src={house} alt="" />
-            </button>
+            <button
+              on:click={() =>
+                view === "square" ? (view = "list") : (view = "square")}
+              ><img
+                src={view === "square" ? squareMethodIcon : listIcon}
+                alt=""
+              /></button
+            >
           </li>
-          <li>
-            <button on:click={() => handleNavigation("Income")}>
-              <img class="nav-image" src={income} alt="" />
-            </button>
-          </li>
-          <li>
-            <button on:click={() => handleNavigation("Expenses")}>
-              <img class="nav-image" src={expenses} alt="" />
-            </button>
-          </li>
-          <li>
-            <button on:click={() => handleNavigation("CashFlow")}>
-              <img class="nav-image" src={cashflow} alt="" />
-            </button>
-          </li>
-          <li>
-            <button on:click={() => handleNavigation("Investments")}>
-              <img class="nav-image" src={house} alt="" />
-            </button>
-          </li>
-          <li>
-            <button on:click={() => handleNavigation("Totals")}>
-              <img class="nav-image" src={house} alt="" />
-            </button>
-          </li>
-          <li>
-            <button on:click={() => handleNavigation("next")}>
-              <img class="nav-image arrow" src={arrow} alt="" />
-            </button>
-          </li>
+          <li><button><img src={saveIcon} alt="" /></button></li>
+          <li><button><img src={favoriteIcon} alt="" /></button></li>
+          <li><button><img src={profileIcon} alt="" /></button></li>
         </ul>
       </div>
     {/if}
   </div>
+  <form data-widget="web" data-active="false" class="widget">
+    <label for="">URL:</label>
+    <input type="text" />
+    <button><img src={submitIcon} alt="" /></button>
+  </form>
 </div>
 
 <style>
@@ -194,36 +86,78 @@
   .logo {
     display: flex;
     align-items: center;
-    padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--gray);
+    padding: 1rem;
   }
 
   .logo-img {
     height: 50px;
   }
 
-  .nav-image {
-    max-width: 30px;
+  .logo > span {
+    display: none;
   }
 
-  .arrow {
-    max-width: 1rem;
+  .bottom {
+    background-color: white;
   }
 
-  li:nth-child(1) .nav-image {
-    rotate: -90deg;
-  }
-
-  li:nth-last-child(1) .nav-image {
-    rotate: 90deg;
-  }
-
-  ul {
+  .wrapper {
     display: flex;
-    gap: 0.25rem;
-    align-items: center;
     justify-content: space-between;
-    list-style: none;
-    padding-top: 1rem;
+    list-style-type: none;
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding: 0 10px;
+    background-color: white;
+  }
+
+  .widget {
+    position: absolute;
+    top: -150%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    transition: top 250ms ease-in-out;
+    z-index: 3;
+    width: calc(100% - 1rem);
+    max-width: 500px;
+  }
+
+  .widget input {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: 2px solid var(--black);
+  }
+
+  .widget button {
+    background-color: var(--blue);
+    padding: 0.25rem 0.75rem;
+    /* border-radius: 1rem;
+    border: 2px solid var(--black); */
+  }
+
+  img {
+    max-height: 30px;
+  }
+
+  button {
+    padding: 1rem;
+    display: grid;
+    place-content: center;
+  }
+
+  li {
+    position: relative;
+  }
+
+  @media (min-width: 40em) {
+    .logo > span {
+      display: block;
+    }
   }
 </style>

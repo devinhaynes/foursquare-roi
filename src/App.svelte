@@ -21,7 +21,7 @@
   let view: "square" | "list" = "square";
 </script>
 
-<Header bind:view bind:component />
+<Header bind:view />
 <main>
   {#if view === "square"}
     {#if component === "HouseInfo"}
@@ -52,4 +52,10 @@
     <Totals />
   {/if}
 </main>
-<BottomBar bind:view />
+<BottomBar bind:component bind:view />
+
+<style>
+  main {
+    margin-inline: auto;
+  }
+</style>
