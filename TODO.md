@@ -10,7 +10,7 @@
 - [] 508 Compliance
 - [x] Modify bottom bar with icons
 - [x] Move navigation buttons
-- [] Create remaining navigation icons
+- [x] Create remaining navigation icons
 - [] Fix house info styling
 - [] Change initial values to placeholders
 - [] Add help text

@@ -128,7 +128,6 @@
 
   .input {
     display: flex;
-    width: 100%;
   }
 
   .input > span {
@@ -146,6 +145,7 @@
 
   input {
     text-align: right;
+    width: 100%;
   }
 
   input[type="number"] {

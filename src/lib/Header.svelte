@@ -32,30 +32,28 @@
       <img src={logo} class="logo-img" alt="FourSquare Logo" />
       <span>ROI Calculator</span>
     </div>
-    {#if view === "square"}
-      <div class="bottom">
-        <ul class="wrapper">
-          <li>
-            <button on:click={() => toggleWidget("web")}>
-              <img src={webIcon} alt="" />
-            </button>
-          </li>
-          <li>
-            <button
-              on:click={() =>
-                view === "square" ? (view = "list") : (view = "square")}
-              ><img
-                src={view === "square" ? squareMethodIcon : listIcon}
-                alt=""
-              /></button
-            >
-          </li>
-          <li><button><img src={saveIcon} alt="" /></button></li>
-          <li><button><img src={favoriteIcon} alt="" /></button></li>
-          <li><button><img src={profileIcon} alt="" /></button></li>
-        </ul>
-      </div>
-    {/if}
+    <div class="bottom">
+      <ul class="wrapper">
+        <li>
+          <button on:click={() => toggleWidget("web")}>
+            <img src={webIcon} alt="" />
+          </button>
+        </li>
+        <li>
+          <button
+            on:click={() =>
+              view === "square" ? (view = "list") : (view = "square")}
+            ><img
+              src={view === "square" ? squareMethodIcon : listIcon}
+              alt=""
+            /></button
+          >
+        </li>
+        <li><button><img src={saveIcon} alt="" /></button></li>
+        <li><button><img src={favoriteIcon} alt="" /></button></li>
+        <li><button><img src={profileIcon} alt="" /></button></li>
+      </ul>
+    </div>
   </div>
   <form data-widget="web" data-active="false" class="widget">
     <label for="">URL:</label>
@@ -114,7 +112,8 @@
 
   .widget {
     position: absolute;
-    top: -150%;
+    top: -80px;
+    right: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -122,10 +121,10 @@
     background-color: white;
     padding: 1rem;
     border-radius: 0.75rem;
-    transition: top 250ms ease-in-out;
-    z-index: 3;
+    transition: top 500ms ease-in-out;
     width: calc(100% - 1rem);
     max-width: 500px;
+    z-index: -1;
   }
 
   .widget input {
@@ -137,8 +136,6 @@
   .widget button {
     background-color: var(--blue);
     padding: 0.25rem 0.75rem;
-    /* border-radius: 1rem;
-    border: 2px solid var(--black); */
   }
 
   img {

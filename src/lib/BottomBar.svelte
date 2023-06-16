@@ -119,70 +119,78 @@
   }
 </script>
 
-<div class="BottomBar">
-  <div class="wrapper">
-    <ul>
-      <li class="nav-link">
-        <button class="nav-button" on:click={() => handleNavigation("prev")}>
-          <img class="nav-image arrow" src={arrow} alt="" />
-        </button>
-      </li>
-      <li class="nav-link">
-        <button
-          class="nav-button"
-          on:click={() => handleNavigation("HouseInfo")}
-        >
-          <img class="nav-image" src={house} alt="" />
-          <span>House Info</span>
-        </button>
-      </li>
-      <li class="nav-link">
-        <button class="nav-button" on:click={() => handleNavigation("Income")}>
-          <img class="nav-image" src={income} alt="" />
-          <span>Income</span>
-        </button>
-      </li>
-      <li class="nav-link">
-        <button
-          class="nav-button"
-          on:click={() => handleNavigation("Expenses")}
-        >
-          <img class="nav-image" src={expenses} alt="" />
-          <span>Expenses</span>
-        </button>
-      </li>
-      <li class="nav-link">
-        <button
-          class="nav-button"
-          on:click={() => handleNavigation("CashFlow")}
-        >
-          <img class="nav-image" src={cashflow} alt="" />
-          <span>Cashflow</span>
-        </button>
-      </li>
-      <li class="nav-link">
-        <button
-          class="nav-button"
-          on:click={() => handleNavigation("Investments")}
-        >
-          <img class="nav-image" src={investments} alt="" />
-          <span>Investments</span>
-        </button>
-      </li>
-      <li class="nav-link">
-        <button class="nav-button" on:click={() => handleNavigation("Totals")}>
-          <img class="nav-image" src={totals} alt="" />
-          <span>Totals</span>
-        </button>
-      </li>
-      <li class="nav-link">
-        <button class="nav-button" on:click={() => handleNavigation("next")}>
-          <img class="nav-image arrow" src={arrow} alt="" />
-        </button>
-      </li>
-    </ul>
+{#if view === "square"}
+  <div class="BottomBar">
+    <div class="wrapper">
+      <ul>
+        <li class="nav-link">
+          <button class="nav-button" on:click={() => handleNavigation("prev")}>
+            <img class="nav-image arrow" src={arrow} alt="" />
+          </button>
+        </li>
+        <li class="nav-link">
+          <button
+            class="nav-button"
+            on:click={() => handleNavigation("HouseInfo")}
+          >
+            <img class="nav-image" src={house} alt="" />
+            <span>House Info</span>
+          </button>
+        </li>
+        <li class="nav-link">
+          <button
+            class="nav-button"
+            on:click={() => handleNavigation("Income")}
+          >
+            <img class="nav-image" src={income} alt="" />
+            <span>Income</span>
+          </button>
+        </li>
+        <li class="nav-link">
+          <button
+            class="nav-button"
+            on:click={() => handleNavigation("Expenses")}
+          >
+            <img class="nav-image" src={expenses} alt="" />
+            <span>Expenses</span>
+          </button>
+        </li>
+        <li class="nav-link">
+          <button
+            class="nav-button"
+            on:click={() => handleNavigation("CashFlow")}
+          >
+            <img class="nav-image" src={cashflow} alt="" />
+            <span>Cashflow</span>
+          </button>
+        </li>
+        <li class="nav-link">
+          <button
+            class="nav-button"
+            on:click={() => handleNavigation("Investments")}
+          >
+            <img class="nav-image" src={investments} alt="" />
+            <span>Investments</span>
+          </button>
+        </li>
+        <li class="nav-link">
+          <button
+            class="nav-button"
+            on:click={() => handleNavigation("Totals")}
+          >
+            <img class="nav-image" src={totals} alt="" />
+            <span>Totals</span>
+          </button>
+        </li>
+        <li class="nav-link">
+          <button class="nav-button" on:click={() => handleNavigation("next")}>
+            <img class="nav-image arrow" src={arrow} alt="" />
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
-</div>
+{/if}
 
 <style>
   .BottomBar {
