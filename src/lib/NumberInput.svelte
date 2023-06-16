@@ -128,6 +128,7 @@
 
   .input {
     display: flex;
+    width: 100%;
   }
 
   .input > span {
