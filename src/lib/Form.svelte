@@ -20,16 +20,7 @@
   {#each Object.keys($roi[square]) as squareKey}
     <div class="form-group">
       <label for={squareKey.toLowerCase()}>{capitalize(squareKey)}</label>
-      <NumberInput
-        value={$roi[square][squareKey].value}
-        {square}
-        key={squareKey}
-        name={squareKey}
-        hasPercentage={$roi[square][squareKey].hasPercentage}
-        percentageBasedOn={$roi[square][squareKey].percentageBasedOn}
-        percentageValue={$roi[square][squareKey].percentage}
-        isPercentage={$roi[square][squareKey].isPercentage || false}
-      />
+      <NumberInput {square} key={squareKey} name={squareKey} />
     </div>
   {/each}
 </form>

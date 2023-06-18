@@ -211,6 +211,7 @@
     background-color: white;
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
+    box-shadow: 0 -1px 4px 1px rgba(255, 255, 255, 0.2);
   }
 
   .nav-image {

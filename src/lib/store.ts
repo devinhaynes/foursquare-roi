@@ -1,35 +1,25 @@
 import { writable, get as getStore } from "svelte/store";
 
+const defaultValues = {value: 0,
+hasPercentage: false,
+isPercentage: false,
+percentageBasedOn: null,
+percentage: 0,
+usePercentage: false,
+disabled: false}
+
 export const roi = writable({
   'house-info': {
-    'house-cost': {
-      value: 0,
-      hasPercentage: false
-    }
+    'house-cost': defaultValues
   },
   income: {
-    rent: {
-      value: 0,
-      hasPercentage: false
-    },
-    'additional-income': {
-      value: 0,
-      hasPercentage: false
-    }
+    rent: defaultValues,
+    'additional-income': defaultValues
   },
   expenses: {
-    tax: {
-      value: 0,
-      hasPercentage: false
-    },
-    insurance: {
-      value: 0,
-      hasPercentage: false
-    },
-    utilities: {
-      value: 0,
-      hasPercentage: false
-    },
+    tax: defaultValues,
+    insurance: defaultValues,
+    utilities: defaultValues,
     vacancy: {
       value: 0,
       hasPercentage: true,
@@ -37,7 +27,10 @@ export const roi = writable({
         square: "house-info",
         key: "house-cost"
       },
-      percentage: 1
+      usePercentage: true,
+      isPercentage: false,
+      percentage: 1,
+      disabled: false
     },
     repairs: {
       value: 0,
@@ -46,7 +39,10 @@ export const roi = writable({
         square: "income",
         key: "rent"
       },
-      percentage: 10
+      usePercentage: true,
+      percentage: 10,
+      isPercentage: false,
+      disabled: false
     },
     'capital-expenditures': {
       value: 0,
@@ -55,6 +51,7 @@ export const roi = writable({
         square: "income",
         key: "rent"
       },
+      usePercentage: true,
       percentage: 10
     },
     'property-manager': {
@@ -64,6 +61,7 @@ export const roi = writable({
         square: "income",
         key: "rent"
       },
+      usePercentage: true,
       percentage: 10
     },
     mortgage: {
@@ -78,16 +76,24 @@ export const roi = writable({
   cashflow: {
     'monthly-income': {
       get value() {return Object.values(getStore(roi).income).map((entry: {value: number, hasPercentage: boolean}) => entry.value).reduce((a: number, b: number) => a + b)},
-      hasPercentage: false
+      hasPercentage: false,
+      disabled: true
     },
     'monthly-expenses': {
       get value() {return Object.values(getStore(roi).expenses).map((entry: {value: number, hasPercentage: boolean}) => entry.value).reduce((a: number, b: number) => a + b)},
-      hasPercentage: false
+      hasPercentage: false,
+      disabled: true
+    },
+    'monthly-cashflow': {
+      get value() {return getStore(roi).cashflow['monthly-income'].value - getStore(roi).cashflow['monthly-expenses'].value},
+      hasPercentage: false,
+      disabled: true
     }
   },
   'investments': {
     'down-payment': {
       value: 0,
+      usePercentage: true,
       hasPercentage: true,
       percentageBasedOn: {
         square: "house-info",
@@ -107,16 +113,19 @@ export const roi = writable({
   totals: {
     'annual-cashflow': {
       get value() {return (getStore(roi).cashflow["monthly-income"].value - getStore(roi).cashflow["monthly-expenses"].value) * 12},
-      hasPercentage: false
+      hasPercentage: false,
+      disabled: true
     },
     'total-investment': {
       get value() {return Object.values(getStore(roi).investments).map((entry: {value: number, hasPercentage: boolean}) => entry.value).reduce((a: number, b: number) => a + b)},
-      hasPercentage: false
+      hasPercentage: false,
+      disabled: true
     },
     'cash-on-cash-roi': {
-      get value() {return (getStore(roi).totals["annual-cashflow"].value / getStore(roi).totals["total-investment"].value) * 100},
+      get value() {return ((getStore(roi).totals["annual-cashflow"].value / getStore(roi).totals["total-investment"].value) * 100).toFixed(2)},
       hasPercentage: false,
-      isPercentage: true
+      isPercentage: true,
+      disabled: true
     }
   }
 });

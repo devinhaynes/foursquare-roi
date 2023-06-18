@@ -2,28 +2,33 @@
   import { roi } from "./store";
 
   export let name: string;
-  export let hasPercentage: boolean = false;
-  export let disabled: boolean = false;
   export let square = "";
   export let key = "";
-  export let value = 0;
-  export let percentageValue = 10;
-  export let percentageBasedOn = {
-    square: "income",
-    key: "rent",
-  };
-  export let isPercentage = false;
 
-  if (hasPercentage) {
+  const input = $roi[square][key];
+
+  const {
+    hasPercentage,
+    percentage,
+    percentageBasedOn,
+    usePercentage,
+    isPercentage,
+    disabled,
+  } = input;
+
+  let { value } = input;
+
+  if (hasPercentage && usePercentage) {
+    value =
+      $roi[percentageBasedOn.square][percentageBasedOn.key].value *
+      (percentage * 0.01);
     roi.set({
       ...$roi,
       [square]: {
         ...$roi[square],
         [key]: {
           ...$roi[square][key],
-          value:
-            $roi[percentageBasedOn.square][percentageBasedOn.key].value *
-            (percentageValue * 0.01),
+          value,
         },
       },
     });
@@ -32,13 +37,13 @@
   function handleChange(e) {
     if (hasPercentage) {
       // Handle Infinity error when based-on value is 0
-      percentageValue = Math.floor(
+      let newPercentageValue = Math.floor(
         (e.target.value /
           $roi[percentageBasedOn.square][percentageBasedOn.key].value) *
           100
       );
 
-      if (percentageValue === Infinity) percentageValue = null;
+      if (newPercentageValue === Infinity) newPercentageValue = null;
 
       return roi.set({
         ...$roi,
@@ -47,7 +52,8 @@
           [key]: {
             ...$roi[square][key],
             value: parseInt(e.target.value),
-            percentage: percentageValue,
+            percentage: newPercentageValue,
+            usePercentage: false,
           },
         },
       });
@@ -57,7 +63,11 @@
       ...$roi,
       [square]: {
         ...$roi[square],
-        [key]: { ...$roi[square][key], value: parseInt(e.target.value) },
+        [key]: {
+          ...$roi[square][key],
+          value: parseInt(e.target.value),
+          usePercentage: false,
+        },
       },
     });
   }
@@ -73,6 +83,7 @@
             $roi[percentageBasedOn.square][percentageBasedOn.key].value *
             (e.target.value * 0.01),
           percentage: e.target.value,
+          usePercentage: true,
         },
       },
     });
@@ -95,7 +106,7 @@
       <input
         on:change={handlePercentageChange}
         class="percent"
-        value={percentageValue}
+        value={percentage}
         type="number"
         max={100}
       />
