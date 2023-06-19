@@ -215,7 +215,7 @@
   }
 
   .nav-image {
-    max-width: 30px;
+    max-width: 35px;
   }
 
   .arrow {
@@ -244,6 +244,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    padding-bottom: 20px;
   }
 
   .nav-button > span {
@@ -254,10 +255,11 @@
     background-color: var(--black);
     color: white;
     position: absolute;
-    top: 0;
-    left: -50%;
-    padding: 0.5rem 1rem;
-    transform: translateY(calc(-100% + 0.25rem));
+    bottom: 0;
+    left: -100%;
+    right: -100%;
+    padding: 0.5rem 0.25rem;
+    transform: translateY(15px);
     outline: 1px solid white;
   }
 

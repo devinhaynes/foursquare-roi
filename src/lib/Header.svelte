@@ -67,6 +67,7 @@
     background-color: white;
     padding-inline: 10px;
     color: var(--black);
+    isolation: isolate;
   }
 
   .header span {

@@ -1,6 +1,6 @@
 import { writable, get as getStore } from "svelte/store";
 
-const defaultValues = {value: 0,
+const defaultValues = {value: null,
 hasPercentage: false,
 isPercentage: false,
 percentageBasedOn: null,
@@ -21,7 +21,7 @@ export const roi = writable({
     insurance: defaultValues,
     utilities: defaultValues,
     vacancy: {
-      value: 0,
+      value: null,
       hasPercentage: true,
       percentageBasedOn: {
         square: "house-info",
@@ -33,7 +33,7 @@ export const roi = writable({
       disabled: false
     },
     repairs: {
-      value: 0,
+      value: null,
       hasPercentage: true,
       percentageBasedOn: {
         square: "income",
@@ -45,7 +45,7 @@ export const roi = writable({
       disabled: false
     },
     'capital-expenditures': {
-      value: 0,
+      value: null,
       hasPercentage: true,
       percentageBasedOn: {
         square: "income",
@@ -55,7 +55,7 @@ export const roi = writable({
       percentage: 10
     },
     'property-manager': {
-      value: 0,
+      value: null,
       hasPercentage: true,
       percentageBasedOn: {
         square: "income",
@@ -65,11 +65,11 @@ export const roi = writable({
       percentage: 10
     },
     mortgage: {
-      value: 0,
+      value: null,
       hasPercentage: false
     },
     other: {
-      value: 0,
+      value: null,
       hasPercentage: false
     }
   },
@@ -92,7 +92,7 @@ export const roi = writable({
   },
   'investments': {
     'down-payment': {
-      value: 0,
+      value: null,
       usePercentage: true,
       hasPercentage: true,
       percentageBasedOn: {
@@ -102,11 +102,11 @@ export const roi = writable({
       percentage: 20
     },
     'closing-costs': {
-      value: 0,
+      value: null,
       hasPercentage: false
     },
     repairs: {
-      value: 0,
+      value: null,
       hasPercentage: false
     }
   },

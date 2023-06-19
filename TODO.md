@@ -16,3 +16,4 @@
 - [] Add help text
 - [] Add user preferences
 - [] Modify BEM styling since Svelte style are scoped
+- [] Cache images
