@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { roi } from "./store";
+
   import logo from "../assets/logo.svg";
   import squareMethodIcon from "../assets/square-method-icon.svg";
   import webIcon from "../assets/web-icon.svg";
@@ -10,7 +12,7 @@
 
   export let view;
 
-  function toggleWidget(element: string) {
+  function toggleWidget(element) {
     const widget = document.querySelector(`.widget[data-widget=${element}`);
 
     if (widget.getAttribute("data-active") == "true") {
@@ -23,6 +25,31 @@
       widget.setAttribute("data-active", "true");
       widget.setAttribute("style", "top: 75px;");
     }
+  }
+
+  const api = "https://4g327brbdd.execute-api.us-east-1.amazonaws.com/beta";
+
+  async function getPrice(e: SubmitEvent) {
+    e.preventDefault();
+    console.log(e.target[0].value);
+    const response = await fetch(api, {
+      method: "POST",
+      body: JSON.stringify({ url: e.target[0].value }),
+    }).then((res) => res.json());
+
+    if (response.statusCode === 200) {
+      roi.set({
+        ...$roi,
+        "house-info": {
+          "house-cost": {
+            ...$roi["house-info"]["house-cost"],
+            value: parseInt(response.body),
+          },
+        },
+      });
+    }
+
+    toggleWidget("web");
   }
 </script>
 
@@ -55,10 +82,15 @@
       </ul>
     </div>
   </div>
-  <form data-widget="web" data-active="false" class="widget">
-    <label for="">URL:</label>
-    <input type="text" />
-    <button><img src={submitIcon} alt="" /></button>
+  <form
+    on:submit={getPrice}
+    data-widget="web"
+    data-active="false"
+    class="widget"
+  >
+    <label for="house-info-url">URL:</label>
+    <input id="house-info-url" type="text" />
+    <button type="submit"><img src={submitIcon} alt="" /></button>
   </form>
 </div>
 
