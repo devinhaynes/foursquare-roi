@@ -19,6 +19,7 @@
     "vite": "^4.3.9"
   },
   "dependencies": {
+    "firebase": "^9.22.2",
     "vite-plugin-pwa": "^0.16.4"
   }
 }

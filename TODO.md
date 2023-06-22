@@ -17,3 +17,7 @@
 - [] Add user preferences
 - [] Modify BEM styling since Svelte style are scoped
 - [] Cache images
+- [x] Add API to get house price
+- [] Add API to get house data
+- [] Re-render house info after API call
+- [] Setup firebase SDK

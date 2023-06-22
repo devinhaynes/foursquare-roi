@@ -6,7 +6,10 @@ Calculate a potential ROI for an investment property. Based on the Four Square m
 
 1. **Clone Repo** `git clone git@github.com:devinhaynes/foursquare-roi.git`
 2. **Install Packages** `npm i`
-3. **Start app** `npm run dev`
+3. **Setup Env**
+   - Create .env file
+   - Add VITE_FIREBASE_API_KEY="YOUR_API_KEY"
+4. **Start app** `npm run dev`
 
 ## Deploy - Staging
 

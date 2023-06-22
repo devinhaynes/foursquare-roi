@@ -42,6 +42,11 @@ body {
   min-height: 100vh;
 }
 
+main {
+  flex-grow: 1;
+  padding-block: 3rem;
+}
+
 button {
   cursor: pointer;
   border: none;

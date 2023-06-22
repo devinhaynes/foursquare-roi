@@ -1,4 +1,5 @@
-import { writable, get as getStore } from "svelte/store";
+import { writable, get as getStore, type Writable } from "svelte/store";
+import { type User } from "firebase/auth";
 
 const defaultValues = {value: null,
 hasPercentage: false,
@@ -129,3 +130,5 @@ export const roi = writable({
     }
   }
 });
+
+export const user: Writable<User> = writable();

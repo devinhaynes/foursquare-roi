@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { roi } from "./store";
+  import { roi, user } from "./store";
+  import { googleAuth } from "../firebase/auth/auth";
 
   import logo from "../assets/logo.svg";
   import squareMethodIcon from "../assets/square-method-icon.svg";
@@ -7,6 +8,7 @@
   import saveIcon from "../assets/save-icon.svg";
   import favoriteIcon from "../assets/favorite-icon.svg";
   import profileIcon from "../assets/profile-icon.svg";
+  import profileIconActive from "../assets/profile-icon-active.svg";
   import listIcon from "../assets/list-view-icon.svg";
   import submitIcon from "../assets/submit-icon.svg";
 
@@ -51,6 +53,8 @@
 
     toggleWidget("web");
   }
+
+  const { uid } = $user;
 </script>
 
 <div class="header">
@@ -63,7 +67,7 @@
       <ul class="wrapper">
         <li>
           <button on:click={() => toggleWidget("web")}>
-            <img src={webIcon} alt="" />
+            <img src={webIcon} alt="Web" />
           </button>
         </li>
         <li>
@@ -72,13 +76,25 @@
               view === "square" ? (view = "list") : (view = "square")}
             ><img
               src={view === "square" ? squareMethodIcon : listIcon}
-              alt=""
+              alt={view === "square" ? "square view" : "list view"}
             /></button
           >
         </li>
-        <li><button><img src={saveIcon} alt="" /></button></li>
-        <li><button><img src={favoriteIcon} alt="" /></button></li>
-        <li><button><img src={profileIcon} alt="" /></button></li>
+        <li><button><img src={saveIcon} alt="Save" /></button></li>
+        <li><button><img src={favoriteIcon} alt="Favorite" /></button></li>
+        <li>
+          <button on:click={googleAuth}
+            ><img
+              class="profile-img"
+              src={$user
+                ? $user.photoURL
+                  ? $user.photoURL
+                  : profileIconActive
+                : profileIcon}
+              alt="profile"
+            /></button
+          >
+        </li>
       </ul>
     </div>
   </div>
@@ -117,7 +133,6 @@
   .logo {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--gray);
     padding: 1rem;
   }
 
@@ -173,6 +188,10 @@
 
   img {
     max-height: 30px;
+  }
+
+  img.profile-img {
+    border-radius: 50%;
   }
 
   button {
