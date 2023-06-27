@@ -1,8 +1,10 @@
 <script lang="ts">
-  import { roi, user } from "./store";
-  import { googleAuth } from "../firebase/auth/auth";
+  import { roi } from "./store";
+  import { googleSignIn, googleSignOut } from "../firebase/auth/auth";
+  import { getAuth } from "firebase/auth";
 
   import logo from "../assets/logo.svg";
+  import logoMod from "../assets/logo-mod.svg";
   import squareMethodIcon from "../assets/square-method-icon.svg";
   import webIcon from "../assets/web-icon.svg";
   import saveIcon from "../assets/save-icon.svg";
@@ -13,6 +15,8 @@
   import submitIcon from "../assets/submit-icon.svg";
 
   export let view;
+
+  let profileImg = profileIcon;
 
   function toggleWidget(element) {
     const widget = document.querySelector(`.widget[data-widget=${element}`);
@@ -54,7 +58,28 @@
     toggleWidget("web");
   }
 
-  const { uid } = $user;
+  function handleProfileImg() {
+    const user = getAuth().currentUser;
+    console.log(user);
+
+    if (!user) {
+      googleSignIn();
+    } else {
+      googleSignOut();
+    }
+
+    if (user && user.photoURL) {
+      profileImg = user.photoURL;
+    }
+
+    if (user && !user.photoURL) {
+      profileImg = profileIconActive;
+    }
+
+    if (!user) {
+      profileImg = profileIcon;
+    }
+  }
 </script>
 
 <div class="header">
@@ -83,14 +108,11 @@
         <li><button><img src={saveIcon} alt="Save" /></button></li>
         <li><button><img src={favoriteIcon} alt="Favorite" /></button></li>
         <li>
-          <button on:click={googleAuth}
+          <button
             ><img
+              referrerpolicy="no-referrer"
               class="profile-img"
-              src={$user
-                ? $user.photoURL
-                  ? $user.photoURL
-                  : profileIconActive
-                : profileIcon}
+              src={profileImg}
               alt="profile"
             /></button
           >
