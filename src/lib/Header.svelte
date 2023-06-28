@@ -108,14 +108,14 @@
         <li><button><img src={saveIcon} alt="Save" /></button></li>
         <li><button><img src={favoriteIcon} alt="Favorite" /></button></li>
         <li>
-          <button
-            ><img
+          <button>
+            <img
               referrerpolicy="no-referrer"
               class="profile-img"
               src={profileImg}
               alt="profile"
-            /></button
-          >
+            />
+          </button>
         </li>
       </ul>
     </div>
