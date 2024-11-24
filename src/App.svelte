@@ -53,9 +53,3 @@
   {/if}
 </main>
 <BottomBar bind:component bind:view />
-
-<style>
-  main {
-    margin-inline: auto;
-  }
-</style>

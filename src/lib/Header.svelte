@@ -2,6 +2,7 @@
   import { roi } from "./store";
   import { googleSignIn, googleSignOut } from "../firebase/auth/auth";
   import { getAuth } from "firebase/auth";
+  import type { ROI } from "./store";
 
   import logo from "../assets/logo.svg";
   import logoMod from "../assets/logo-mod.svg";
@@ -13,6 +14,14 @@
   import profileIconActive from "../assets/profile-icon-active.svg";
   import listIcon from "../assets/list-view-icon.svg";
   import submitIcon from "../assets/submit-icon.svg";
+
+
+  type HomeDataResponseBody = {price: string, totalMonthlyCost: number, downPaymentAmount: number, homeownersInsurance: number, principalAndInterest: number, propertyTax: number}
+
+  type HomeDataResponse = {
+    statusCode: number;
+    body: HomeDataResponseBody;
+  }
 
   export let view;
 
@@ -37,22 +46,55 @@
 
   async function getPrice(e: SubmitEvent) {
     e.preventDefault();
-    console.log(e.target[0].value);
-    const response = await fetch(api, {
+    const response: HomeDataResponse = await fetch(api, {
       method: "POST",
       body: JSON.stringify({ url: e.target[0].value }),
     }).then((res) => res.json());
 
     if (response.statusCode === 200) {
-      roi.set({
+
+      // Updated API response returns more data
+      const { price, totalMonthlyCost, downPaymentAmount, homeownersInsurance, principalAndInterest, propertyTax} = response.body;
+
+      console.log(response.body);
+
+      const newValue: ROI = {
         ...$roi,
         "house-info": {
           "house-cost": {
             ...$roi["house-info"]["house-cost"],
-            value: parseInt(response.body),
+            value: parseInt(price),
           },
         },
-      });
+        expenses: {
+          ...$roi.expenses,
+          insurance: {
+            ...$roi.expenses["insurance"],
+            value: homeownersInsurance,
+          },
+          tax: {
+            ...$roi.expenses["tax"],
+            value: propertyTax,
+          },
+          mortgage: {
+            ...$roi.expenses.mortgage,
+            value: principalAndInterest,
+          }
+        },
+        investments: {
+          ...$roi.investments,
+          "down-payment": {
+            ...$roi.investments["down-payment"],
+            value: downPaymentAmount,
+          },
+        },
+      };
+
+      console.log(newValue);
+
+      // console.log(newValue);
+
+      roi.set(newValue);
     }
 
     toggleWidget("web");
@@ -91,7 +133,7 @@
     <div class="bottom">
       <ul class="wrapper">
         <li>
-          <button on:click={() => toggleWidget("web")}>
+          <button popovertarget="zillow-import">
             <img src={webIcon} alt="Web" />
           </button>
         </li>
@@ -105,9 +147,9 @@
             /></button
           >
         </li>
-        <li><button><img src={saveIcon} alt="Save" /></button></li>
-        <li><button><img src={favoriteIcon} alt="Favorite" /></button></li>
-        <li>
+        <!-- <li><button><img src={saveIcon} alt="Save" /></button></li>
+        <li><button><img src={favoriteIcon} alt="Favorite" /></button></li> -->
+        <!-- <li>
           <button>
             <img
               referrerpolicy="no-referrer"
@@ -116,19 +158,41 @@
               alt="profile"
             />
           </button>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>
+  <!-- <form
+    on:submit={getPrice}
+    data-widget="web"
+    data-active="false"
+    class="widget"
+  >
+    <div class="form-group">
+      <label for="house-info-url">Zillow URL:</label>
+        <input id="house-info-url" type="text" />
+        <button type="submit">
+          <img src={submitIcon} alt="" />
+        </button>
+    </div>
+      <button class="close" on:click={toggleWidget}>X</button>
+  </form> -->
+</div>
+
+<div popover id="zillow-import">
   <form
     on:submit={getPrice}
     data-widget="web"
     data-active="false"
     class="widget"
   >
-    <label for="house-info-url">URL:</label>
-    <input id="house-info-url" type="text" />
-    <button type="submit"><img src={submitIcon} alt="" /></button>
+    <div class="form-group">
+      <label for="house-info-url">Zillow URL:</label>
+        <input id="house-info-url" type="text" />
+        <button type="submit">
+          <img src={submitIcon} alt="" />
+        </button>
+    </div>
   </form>
 </div>
 
@@ -180,41 +244,73 @@
     background-color: white;
   }
 
-  .widget {
+  #zillow-import {
     position: absolute;
-    top: -80px;
-    right: 1rem;
-    display: flex;
+    inset: 0;
+  }
+
+  #zillow-import:popover-open {
+    display: grid;
+  }
+
+  .widget {
+    /* display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 1rem;
+    align-items: center; */
+    gap: .5rem;
     background-color: white;
-    padding: 1rem;
-    border-radius: 0.75rem;
-    transition: top 500ms ease-in-out;
-    width: calc(100% - 1rem);
-    max-width: 500px;
-    z-index: -1;
-  }
-
-  .widget input {
-    padding: 0.5rem 1rem;
+    padding: .5rem;
     border-radius: 0.25rem;
-    border: 2px solid var(--black);
+    /* transition: top 500ms ease-in-out; */
+    /* width: calc(100% - 1rem); */
+    /* max-width: 450px; */
+    /* z-index: -1; */
+
+
+    & input {
+      padding: .5rem 1rem;
+      font-size: 1rem;
+      border-radius: .25rem;
+      border: 1px solid var(--black);
+      /* border: none; */
+
+      &:hover {
+        outline: none;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    & button {
+      background-color: var(--blue);
+      padding: .25rem .75rem;
+      border-radius: .25rem;
+
+      &:hover img {
+        transform: translateX(5px);
+      }
+    }
+
+    & img {
+      transition: transform 0.25s;
+    }
   }
 
-  .widget button {
-    background-color: var(--blue);
-    padding: 0.25rem 0.75rem;
+  .form-group {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
   }
 
   img {
     max-height: 30px;
   }
 
-  img.profile-img {
+  /* img.profile-img {
     border-radius: 50%;
-  }
+  } */
 
   button {
     padding: 1rem;

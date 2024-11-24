@@ -67,16 +67,16 @@ button:focus-visible {
   height: 100vh;
 }
 
-
 input::-webkit-outer-spin-button,
-      input::-webkit-inner-spin-button {
-        display: none;
-      }
+input::-webkit-inner-spin-button {
+  display: none;
+}
 
 .section-header {
   padding-block: 1rem;
   padding-right: 1rem;
   margin-block: 1rem;
+  margin-inline: auto;
   border-bottom: 2px solid rgba(255, 255, 255, 0.75);
 }
 
@@ -84,7 +84,6 @@ input::-webkit-outer-spin-button,
   max-width: var(--max-width);
   margin-inline: auto;
   padding-inline: 10px;
-  flex-grow: 1;
   padding-bottom: 75px;
 }
 

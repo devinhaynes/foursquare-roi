@@ -18,6 +18,8 @@
 
   let { value } = input;
 
+  
+
   if (hasPercentage && usePercentage) {
     value =
       $roi[percentageBasedOn.square][percentageBasedOn.key].value *
@@ -34,11 +36,27 @@
     });
   }
 
-  function handleChange(e) {
+  function formatCurrency(value: number) {
+    // Format decimal points without adding currency symbol
+    return value.toLocaleString("en-US", {
+      style: "decimal",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
+  const formattedValue = formatCurrency(value || 0);
+
+  function unformatCurrency(value: string) {
+    return parseFloat(value.replace(/[^0-9.-]+/g, ""));
+  }
+
+  function handleChange(event: Event) {
+    const target =  event.target as HTMLInputElement;
+    const value = unformatCurrency(target.value);
     if (hasPercentage) {
       // Handle Infinity error when based-on value is 0
       let newPercentageValue = Math.floor(
-        (e.target.value /
+        (value /
           $roi[percentageBasedOn.square][percentageBasedOn.key].value) *
           100
       );
@@ -51,7 +69,7 @@
           ...$roi[square],
           [key]: {
             ...$roi[square][key],
-            value: parseInt(e.target.value),
+            value,
             percentage: newPercentageValue,
             usePercentage: false,
           },
@@ -65,7 +83,7 @@
         ...$roi[square],
         [key]: {
           ...$roi[square][key],
-          value: parseInt(e.target.value),
+          value,
           usePercentage: false,
         },
       },
@@ -96,10 +114,10 @@
       <span>$</span>
       <input
         {disabled}
-        {value}
+        value={formatCurrency($roi[square][key].value || 0)}
         on:change={handleChange}
         id={name}
-        type="number"
+        data-type="number"
       />
     </div>
     <div class="input">
@@ -107,15 +125,16 @@
         on:change={handlePercentageChange}
         class="percent"
         value={percentage}
-        type="number"
         max={100}
+        min={0}
+        type="number"
       />
       <span>%</span>
     </div>
   </div>
 {:else if isPercentage}
   <div class="input">
-    <input {disabled} {value} class={name} type="number" />
+    <input {disabled} {value} class={name} />
     <span>%</span>
   </div>
 {:else}
@@ -123,10 +142,10 @@
     <span>$</span>
     <input
       {disabled}
-      {value}
+      value={formatCurrency($roi[square][key].value || 0)} 
       on:change={handleChange}
       class={name}
-      type="number"
+      data-type="number"
     />
   </div>
 {/if}
@@ -139,6 +158,9 @@
 
   .input {
     display: flex;
+    border-radius: .25rem;
+    overflow: hidden;
+    max-width: 20ch;
   }
 
   .input > span {
@@ -146,22 +168,29 @@
     color: var(--black);
     display: grid;
     place-content: center;
-    padding: 0.25rem 0.5rem;
-    border-right: 2px solid var(--black);
+    padding: 0.25rem;
   }
 
   .percent {
-    width: 60px;
+    width: 4ch;
+    background-color: white;
+    border: none;
+
+    /* Next sibling is span element */
+    &:has(+ span) {
+      padding-inline: .25rem;
+    }
   }
 
   input {
     text-align: right;
     width: 100%;
+    font-size: 1.25rem;
   }
 
-  input[type="number"] {
+  input[data-type="number"] {
     padding: 0.25rem 0.5rem;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     border: none;
   }
 

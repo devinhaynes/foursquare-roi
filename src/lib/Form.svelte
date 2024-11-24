@@ -33,8 +33,9 @@
   }
 
   form {
-    display: flex;
-    flex-direction: column;
-    gap: 2em;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-inline: auto;
   }
 </style>

@@ -126,66 +126,80 @@
         <li class="nav-link">
           <button class="nav-button" on:click={() => handleNavigation("prev")}>
             <img class="nav-image arrow" src={arrow} alt="" />
+            
           </button>
+          <span class="popover-label">Prev</span>
         </li>
         <li class="nav-link">
           <button
             class="nav-button"
             on:click={() => handleNavigation("HouseInfo")}
           >
+          <div class="ghost"></div>
             <img class="nav-image" src={house} alt="" />
-            <span>House Info</span>
+            
           </button>
+          <span class="popover-label">House Info</span>
         </li>
         <li class="nav-link">
           <button
             class="nav-button"
             on:click={() => handleNavigation("Income")}
           >
+          <div class="ghost"></div>
             <img class="nav-image" src={income} alt="" />
-            <span>Income</span>
+            
           </button>
+          <span class="popover-label">Income</span>
         </li>
         <li class="nav-link">
           <button
             class="nav-button"
             on:click={() => handleNavigation("Expenses")}
           >
+          <div class="ghost"></div>
             <img class="nav-image" src={expenses} alt="" />
-            <span>Expenses</span>
+            
           </button>
+          <span class="popover-label">Expenses</span>
         </li>
         <li class="nav-link">
           <button
             class="nav-button"
             on:click={() => handleNavigation("CashFlow")}
           >
+            <div class="ghost"></div>
             <img class="nav-image" src={cashflow} alt="" />
-            <span>Cashflow</span>
+            
           </button>
+          <span class="popover-label">Cashflow</span>
         </li>
         <li class="nav-link">
           <button
             class="nav-button"
             on:click={() => handleNavigation("Investments")}
           >
+            <div class="ghost"></div>
             <img class="nav-image" src={investments} alt="" />
-            <span>Investments</span>
           </button>
+          <span class="popover-label">Investments</span>
         </li>
         <li class="nav-link">
           <button
             class="nav-button"
             on:click={() => handleNavigation("Totals")}
           >
+            <div class="ghost"></div>
             <img class="nav-image" src={totals} alt="" />
-            <span>Totals</span>
           </button>
+          <span class="popover-label">Totals</span>
         </li>
         <li class="nav-link">
           <button class="nav-button" on:click={() => handleNavigation("next")}>
             <img class="nav-image arrow" src={arrow} alt="" />
+            
           </button>
+          <span class="popover-label">Next</span>
         </li>
       </ul>
     </div>
@@ -200,13 +214,11 @@
     color: var(--black);
     isolation: isolate;
     background-color: white;
-    box-shadow: 0 -1px 2px 0 var(--gray);
   }
 
   .wrapper {
-    display: flex;
-    justify-content: space-between;
     list-style-type: none;
+    width: fit-content;
     max-width: var(--max-width);
     margin-inline: auto;
     padding: 0 10px;
@@ -220,17 +232,31 @@
   }
 
   .arrow {
-    max-width: 1rem;
+    border-radius: 50%;
+    outline: 2px solid var(--black);
+    outline-offset: -1px;
+    padding: .5rem;
+    transition: background-color .25s ease-in-out, outline-offset .15s ease-in-out;
+
+    &:hover {
+      background-color: rgba(0,0,0,.1);
+      outline-offset: 2px;
+    }
   }
 
   ul {
-    display: flex;
-    gap: 0.25rem;
-    align-items: center;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
     list-style: none;
-    padding-block: 1rem;
+    padding-block: 1.25rem;
     width: 100%;
+  }
+
+  li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 75px;
   }
 
   li:nth-child(1) .nav-image {
@@ -241,32 +267,52 @@
     rotate: 90deg;
   }
 
+  .nav-link {
+    &:hover .popover-label {
+      opacity: 1;
+      
+    }
+  }
+
   .nav-button {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .125rem;
     position: relative;
-    padding-bottom: 20px;
+
+    & .ghost {
+      opacity: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 150%;
+      height: 150%;
+      transition: opacity 0.25s;
+      background-color: rgba(0, 0, 0, 0.1);
+      border-radius: .25rem;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus .ghost {
+      opacity: 1;
+    }
   }
 
-  .nav-button > span {
-    font-size: 0.75rem !important;
-    width: 0;
-    height: 0;
+  .popover-label {
+    font-size: 0.75rem;
     opacity: 0;
     background-color: var(--black);
     color: white;
+    padding: .15rem .5rem;
+    border-radius: .25rem;
+    transition: opacity 0.25s;
     position: absolute;
     bottom: 0;
-    left: -100%;
-    right: -100%;
-    padding: 0.5rem 0.25rem;
-    transform: translateY(15px);
-    outline: 1px solid white;
-  }
-
-  .nav-button:hover > span {
-    width: auto;
-    height: auto;
-    opacity: 1;
   }
 </style>
