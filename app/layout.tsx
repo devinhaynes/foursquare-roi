@@ -32,7 +32,6 @@ export default function RootLayout({
           <div className="fixed bottom-0 w-full z-10 md:relative md:w-fit md:max-w-16">
             <Sidebar />
           </div>
-
           {children}
         </div>
       </body>

@@ -1,8 +1,8 @@
 "use client";
 
-import { ChangeEvent, useContext, useEffect } from "react";
+import { ChangeEvent } from "react";
 import { Selector } from "./Selector";
-import { FormContext, FormKey } from "@/lib/state";
+import { FormKey, useROI, SelectableFormKey } from "@/lib/state";
 
 type Props = {
   prefix?: string;
@@ -10,8 +10,8 @@ type Props = {
   label: string;
   formId: FormKey;
   disabled?: boolean;
-  selector?: boolean;
-  selectorValue?: "auto" | "manual" | "percentage";
+  isSelector?: boolean;
+  derivedValue?: number;
 };
 
 export const Input = ({
@@ -20,41 +20,23 @@ export const Input = ({
   label,
   formId,
   disabled = false,
-  selector = false,
-  selectorValue,
+  isSelector = false,
 }: Props) => {
-  const { form, dispatchForm } = useContext(FormContext);
+  const { state, actions } = useROI();
 
   const onValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
+    if (isNaN(newValue) || !isFinite(newValue)) {
+      return;
+    }
+
     if (newValue < 0) {
       console.log("No negative values");
       return;
     }
 
-    dispatchForm({
-      type: "UPDATE_VALUE",
-      value: {
-        formKey: formId,
-        value: newValue,
-      },
-    });
+    actions.setValue(formId, newValue);
   };
-
-  useEffect(() => {
-    if (selector && selectorValue) {
-      // Get state values
-      // Auto - based on recommended financial advice
-      if (selectorValue === "auto") {
-      }
-      // Manual - Customer entered
-      if (selectorValue === "manual") {
-      }
-      // Percentage - Percentage of custom selected field
-      if (selectorValue === "percentage") {
-      }
-    }
-  }, [selector, selectorValue, formId]);
 
   return (
     <div className="flex flex-col-reverse">
@@ -64,17 +46,17 @@ export const Input = ({
         <input
           id={formId}
           value={
-            typeof form[formId] === "number"
-              ? form[formId]
-              : typeof form[formId] === "object"
-              ? form[formId].value
+            typeof state[formId] === "number"
+              ? state[formId]
+              : typeof state[formId] === "object"
+              ? state[formId].value
               : 0
           }
           className=" bg-zinc-100 dark:bg-zinc-800 px-4 py-2 rounded-lg text-xl max-w-[30ch] disabled:bg-zinc-200 disabled:text-zinc-600 disabled:border-zinc-400 disabled:dark:bg-zinc-900 disabled:dark:text-zinc-400 border-[1px] disabled:dark:border-zinc-800 dark:border-zinc-600"
           disabled={disabled}
           onChange={onValueChange}
         />
-        {selector ? <Selector input={formId} /> : null}
+        {isSelector ? <Selector input={formId as SelectableFormKey} /> : null}
       </div>
       <label htmlFor={formId} className="peer-has-[:disabled]:text-zinc-600">
         {label}
