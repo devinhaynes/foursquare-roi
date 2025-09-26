@@ -39,7 +39,7 @@ export const Input = ({
   };
 
   return (
-    <div className="flex flex-col-reverse">
+    <div className="flex flex-col-reverse gap-1">
       {" "}
       {/* The flex-col has to be reversed in order for peer functionality to work. Ref: https://tailwindcss.com/docs/hover-focus-and-other-states#styling-based-on-sibling-state */}
       <div className="peer flex flex-wrap-reverse gap-1">
@@ -52,7 +52,7 @@ export const Input = ({
               ? state[formId].value
               : 0
           }
-          className=" bg-zinc-100 dark:bg-zinc-800 px-4 py-2 rounded-lg text-xl max-w-[30ch] disabled:bg-zinc-200 disabled:text-zinc-600 disabled:border-zinc-400 disabled:dark:bg-zinc-900 disabled:dark:text-zinc-400 border-[1px] disabled:dark:border-zinc-800 dark:border-zinc-600"
+          className="bg-zinc-100 dark:bg-zinc-900 outline-1 outline-zinc-300 dark:outline-zinc-800 px-3 py-1 rounded-lg text-xl"
           disabled={disabled}
           onChange={onValueChange}
         />

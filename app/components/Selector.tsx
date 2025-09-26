@@ -23,7 +23,7 @@ export const Selector = ({ input }: Props) => {
     <form className="flex">
       <select
         onChange={onChange}
-        className="dark:bg-zinc-800 dark:text-white p-2 rounded-lg border-[1px] dark:border-zinc-600"
+        className="bg-zinc-100 dark:bg-zinc-900 dark:text-white p-1 rounded-lg outline-1 outline-zinc-300 dark:outline-zinc-800"
         value={(state[input] as Selectable).selector}
       >
         <option value="auto">Auto</option>

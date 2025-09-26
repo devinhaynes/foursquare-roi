@@ -15,7 +15,7 @@ export type Selectable = {
   selector: SelectorType;
 };
 
-type ROIState = {
+export type ROIState = {
   house_cost: number;
   rent: number;
   additional_income: number;
@@ -37,6 +37,8 @@ type ROIState = {
   annual_cashflow: number;
   roi: number;
 };
+
+export type ROIField = keyof ROIState;
 
 export const defaultFormState: ROIState = {
   house_cost: 0,
