@@ -4,6 +4,7 @@ import { useROI } from "@/lib/state";
 import { MdAccountCircle, MdSave } from "react-icons/md";
 
 import { RiResetLeftFill } from "react-icons/ri";
+import { PageHeader } from "../components/PageHeader";
 
 const SettingsPage = () => {
   const { state } = useROI();
@@ -21,19 +22,19 @@ const SettingsPage = () => {
 
   const roiFields = formatFields(Object.keys(state));
   return (
-    <div className="font-sans flex flex-col gap-8 px-2 mt-4 mb-20 relative min-h-screen w-full mx-auto">
-      <div className="outline-1 outline-zinc-300 dark:outline-zinc-800 bg-white dark:bg-zinc-950 rounded-lg w-full text-3xl px-2 py-1 sticky top-4 flex justify-between items-center">
-        <h1 className="text-2xl uppercase">Settings</h1>
-        <div className="flex gap-2">
-          <button className="hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors p-1 rounded-full">
-            <MdSave />
-          </button>
-          <button className="hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors p-1 rounded-full">
-            <RiResetLeftFill />
-          </button>
-        </div>
-      </div>
-      <div className="grid grid-cols-2 mx-auto md:mx-[unset] lg:grid-rows-5 lg:grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-y-20 md:gap-y-8 gap-x-8 w-fit mt-8 lg:gap-x-20 lg:gap-y-0">
+    <div className="font-sans flex flex-col gap-8 mb-20 relative min-h-screen w-full mx-auto md:mr-4">
+      <PageHeader
+        header="settings"
+        toolbar={[
+          { icon: MdSave, name: "save", action: () => console.log("save") },
+          {
+            icon: RiResetLeftFill,
+            name: "reset",
+            action: () => console.log("reset"),
+          },
+        ]}
+      />
+      <div className="grid grid-cols-2 mx-auto md:mx-[unset] lg:grid-rows-5 lg:grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-y-20 md:gap-y-8 gap-x-8 w-fit mt-8 lg:gap-x-20 lg:gap-y-0 px-2 md:px-0">
         <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-rows-subgrid lg:row-span-full items-center gap-y-4">
           <h2 className="col-span-2 border-b-[1px] mb-4 lg:my-4 uppercase">
             Profile

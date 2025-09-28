@@ -5,35 +5,32 @@ import { Input } from "./Input";
 import { useROI } from "@/lib/state";
 import { Totals } from "./Totals";
 import { RiResetLeftFill } from "react-icons/ri";
+import { PageHeader } from "./PageHeader";
 
 export const ROI = () => {
   const { derived, actions } = useROI();
   return (
-    <div className="font-sans flex flex-col gap-8 px-2 mt-4 mb-20 items-center mx-auto relative">
-      <div className="outline-1 outline-zinc-300 dark:outline-zinc-800 bg-white dark:bg-zinc-950 rounded-lg w-full text-3xl px-2 py-1 sticky top-4 flex justify-between items-center">
-        <h1 className="text-2xl uppercase">ROI Calculator</h1>
-        <div className="flex gap-2">
-          <button className="hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors p-1 rounded-full">
-            <MdImportExport />
-          </button>
-          <button
-            onClick={() => alert("Totally saved....")}
-            className="hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors p-1 rounded-full"
-          >
-            <MdSave />
-          </button>
-          <button
-            onClick={() => actions.reset()}
-            className="hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors p-1 rounded-full"
-          >
-            <RiResetLeftFill />
-          </button>
-        </div>
-      </div>
-      <div className="flex flex-col md:grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+    <div className="font-sans flex flex-col gap-8 mb-20 items-center md:mr-4">
+      <PageHeader
+        header="roi calculator"
+        toolbar={[
+          {
+            icon: MdImportExport,
+            name: "import",
+            action: () => console.log("import"),
+          },
+          { icon: MdSave, name: "save", action: () => console.log("save") },
+          {
+            icon: RiResetLeftFill,
+            name: "reset",
+            action: actions.reset,
+          },
+        ]}
+      />
+      <div className="flex flex-col px-2 md:px-0 md:grid md:grid-cols-2 xl:grid-cols-3 gap-4">
         <div className="flex flex-col gap-4 p-4 outline-1 outline-zinc-300 dark:outline-zinc-800 bg-white dark:bg-zinc-950 rounded-lg ">
           <h2 className="text-2xl pb-8 ">House Info</h2>
-          <Input formId="house_cost" label="Property cost" />{" "}
+          <Input formId="property_cost" label="Property cost" />{" "}
         </div>
         <div className="flex flex-col gap-4 p-4 outline-1 outline-zinc-300 dark:outline-zinc-800 bg-white dark:bg-zinc-950 rounded-lg dark:border-white">
           <div className="flex justify-between">
@@ -55,7 +52,7 @@ export const ROI = () => {
           <Input formId="utilities" label="Utilities" />{" "}
           <Input formId="mortgage" label="Mortgage" />{" "}
           <Input formId="capex" label="Capital Expenditures" isSelector />
-          <Input formId="other" label="Other" />
+          <Input formId="other_expenses" label="Other" />
           <div className="col-start-1">
             <Input
               formId="property_management"
@@ -73,7 +70,7 @@ export const ROI = () => {
           </div>
           <Input formId="down_payment" label="Down Payment" isSelector />{" "}
           <Input formId="closing_costs" label="Closing Costs" isSelector />
-          <Input formId="repairs" label="Repairs" />{" "}
+          <Input formId="upfront_repairs" label="Repairs" />{" "}
         </div>
         <div className="flex flex-col gap-4 p-4 outline-1 outline-zinc-300 dark:outline-zinc-800 bg-white dark:bg-zinc-950 rounded-lg dark:border-white xl:col-span-3">
           <h2 className="text-2xl pb-2 col-span-3 mr-auto">Totals</h2>

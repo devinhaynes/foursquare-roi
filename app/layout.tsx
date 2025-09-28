@@ -17,6 +17,20 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Foursquare ROI",
   description: "Real Estate ROI calculation tool.",
+  icons: [
+    {
+      rel: "icon",
+      media: "(prefers-color-scheme: light)",
+      type: "image/svg+xml",
+      url: "/logo-color.svg",
+    },
+    {
+      rel: "icon",
+      media: "(prefers-color-scheme: dark)",
+      type: "image/svg+xml",
+      url: "/logo-white.svg",
+    },
+  ],
 };
 
 export default function RootLayout({

@@ -16,7 +16,7 @@ export type Selectable = {
 };
 
 export type ROIState = {
-  house_cost: number;
+  property_cost: number;
   rent: number;
   additional_income: number;
   total_income: number;
@@ -28,11 +28,11 @@ export type ROIState = {
   capex: Selectable;
   property_management: Selectable;
   mortgage: number;
-  other: number;
+  other_expenses: number;
   total_expenses: number;
   down_payment: Selectable;
   closing_costs: Selectable;
-  repairs: number;
+  upfront_repairs: number;
   monthly_cashflow: number;
   annual_cashflow: number;
   roi: number;
@@ -41,7 +41,7 @@ export type ROIState = {
 export type ROIField = keyof ROIState;
 
 export const defaultFormState: ROIState = {
-  house_cost: 0,
+  property_cost: 0,
   rent: 0,
   additional_income: 0,
   total_income: 0,
@@ -65,7 +65,7 @@ export const defaultFormState: ROIState = {
     selector: "auto",
   },
   mortgage: 0,
-  other: 0,
+  other_expenses: 0,
   total_expenses: 0,
   down_payment: {
     value: 0,
@@ -75,7 +75,7 @@ export const defaultFormState: ROIState = {
     value: 0,
     selector: "auto",
   },
-  repairs: 0,
+  upfront_repairs: 0,
   monthly_cashflow: 0,
   annual_cashflow: 0,
   roi: 0,
@@ -143,7 +143,7 @@ const reducer = (state: ROIState, action: Action) => {
       }
 
     case "SET_VALUE":
-      if (action.key === "rent" || action.key === "house_cost") {
+      if (action.key === "rent" || action.key === "property_cost") {
         // return updateListeners(state, action.key, action.value);
         // // Find fields that are set to auto
         const fields: SelectableFormKey[] =
@@ -226,7 +226,7 @@ export const FormProvider = ({
 
 const recalculateAutoValue = (state: ROIState, formKey: FormKey): number => {
   let newValue = (state[formKey] as Selectable).value;
-  const { house_cost } = state;
+  const { property_cost } = state;
   const { monthly_income } = derive(state);
   switch (formKey) {
     case "vacancy":
@@ -242,10 +242,10 @@ const recalculateAutoValue = (state: ROIState, formKey: FormKey): number => {
       newValue = monthly_income * 0.1;
       break;
     case "down_payment":
-      newValue = house_cost * 0.2;
+      newValue = property_cost * 0.2;
       break;
     case "closing_costs":
-      newValue = house_cost * 0.04;
+      newValue = property_cost * 0.04;
     default:
       break;
   }
@@ -263,11 +263,11 @@ const derive = (state: ROIState): ROIDerived => {
     utilities,
     mortgage,
     capex,
-    other,
+    other_expenses,
     property_management,
     down_payment,
     closing_costs,
-    repairs,
+    upfront_repairs,
   } = state;
   // Calc monthly income
   const monthly_income = rent + additional_income;
@@ -280,14 +280,15 @@ const derive = (state: ROIState): ROIDerived => {
     utilities +
     mortgage +
     capex.value +
-    other +
+    other_expenses +
     property_management.value;
   // Calc monthly cashflow
   const monthly_cashflow = monthly_income - monthly_expenses;
   // Calc annual cashflow
   const annual_cashflow = monthly_cashflow * 12;
   // Calc total investments
-  const total_investments = down_payment.value + closing_costs.value + repairs;
+  const total_investments =
+    down_payment.value + closing_costs.value + upfront_repairs;
   // Calc ROI
   const roi = (annual_cashflow / total_investments) * 100;
 

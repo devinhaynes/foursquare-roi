@@ -1,4 +1,5 @@
 import { MdDeleteSweep, MdImportExport, MdSave } from "react-icons/md";
+import { PageHeader } from "../components/PageHeader";
 
 const PropertiesPage = () => {
   const formatter = new Intl.NumberFormat("en-US", {
@@ -7,7 +8,7 @@ const PropertiesPage = () => {
   });
   const castFormat = (n: number) => formatter.format(n);
   const fakeProperties = {
-    house_cost: castFormat(100000),
+    property_cost: castFormat(100000),
     rent: castFormat(1000),
     additional_income: castFormat(0),
     total_income: castFormat(1000),
@@ -48,23 +49,17 @@ const PropertiesPage = () => {
   };
 
   return (
-    <div className="font-sans flex flex-col gap-8 px-2 mt-4 mb-20 relative min-h-screen">
-      <div className="outline-1 outline-zinc-300 dark:outline-zinc-800 rounded-lg w-full text-3xl px-2 py-1 sticky top-4 bg-white dark:bg-zinc-950 flex justify-between items-center">
-        <h1 className="text-2xl uppercase">Properties</h1>
-        <div className="flex gap-2">
-          <button className="hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors p-1 rounded-full">
-            <MdImportExport />
-          </button>
-          <button className="hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors p-1 rounded-full">
-            <MdSave />
-          </button>
-          <button className="hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors p-1 rounded-full">
-            <MdDeleteSweep />
-          </button>
-        </div>
-      </div>
-      <div className="flex flex-wrap gap-4">
-        <div className="flex flex-col gap-4 p-4 bg-white dark:bg-zinc-950 outline-1 outline-zinc-300 dark:outline-zinc-800 dark:text-[var(--foreground)] rounded-lg max-w-[30em]">
+    <div className="font-sans flex flex-col gap-8 mb-20 relative min-h-screen md:mr-4">
+      <PageHeader
+        header="properties"
+        toolbar={[
+          { icon: MdImportExport, name: "import", action: () => {} },
+          { icon: MdSave, name: "save", action: () => {} },
+          { icon: MdDeleteSweep, name: "delete", action: () => {} },
+        ]}
+      />
+      <div className="flex flex-wrap gap-4 px-2 md:px-0">
+        <div className="flex flex-col gap-4 p-4 bg-white dark:bg-zinc-950 outline-1 outline-zinc-300 dark:outline-zinc-800 rounded-lg max-w-[30em] md:dark:shadow-[0_0_8px_-2px_#1e1e1e] md:shadow-[0_0_12px_#c3c3c3]">
           <div className="flex justify-between ">
             <h2 className="text-lg ">House 1</h2>
             <p
@@ -110,7 +105,7 @@ const PropertiesPage = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-4 p-4 bg-white dark:bg-zinc-950 outline-1 outline-zinc-300 dark:outline-zinc-800 rounded-lg max-w-[30em]">
+        <div className="flex flex-col gap-4 p-4 bg-white dark:bg-zinc-950 outline-1 outline-zinc-300 dark:outline-zinc-800 rounded-lg max-w-[30em] md:dark:shadow-[0_0_8px_-2px_#1e1e1e] md:shadow-[0_0_12px_#c3c3c3]">
           <div className="flex justify-between ">
             <h2 className="text-lg ">House 2</h2>
             <p
@@ -157,7 +152,7 @@ const PropertiesPage = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-4 p-4 bg-white dark:bg-zinc-950 outline-1 outline-zinc-300 dark:outline-zinc-800 rounded-lg max-w-[30em]">
+        <div className="flex flex-col gap-4 p-4 bg-white dark:bg-zinc-950 outline-1 outline-zinc-300 dark:outline-zinc-800 rounded-lg max-w-[30em] md:dark:shadow-[0_0_8px_-2px_#1e1e1e] md:shadow-[0_0_12px_#c3c3c3]">
           <div className="flex justify-between ">
             <h2 className="text-lg ">House 3</h2>
             <p
@@ -204,7 +199,7 @@ const PropertiesPage = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-4 p-4 bg-white dark:bg-zinc-950 outline-1 outline-zinc-300 dark:outline-zinc-800 rounded-lg max-w-[30em]">
+        <div className="flex flex-col gap-4 p-4 bg-white dark:bg-zinc-950 outline-1 outline-zinc-300 dark:outline-zinc-800 rounded-lg max-w-[30em] md:dark:shadow-[0_0_8px_-2px_#1e1e1e] md:shadow-[0_0_12px_#c3c3c3]">
           <div className="flex justify-between ">
             <h2 className="text-lg ">House 4</h2>
             <p
