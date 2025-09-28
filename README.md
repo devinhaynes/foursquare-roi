@@ -1,43 +1,36 @@
-# FourSquare - ROI Calculator
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Calculate a potential ROI for an investment property. Based on the Four Square method
+## Getting Started
 
-## Development Guide
+First, run the development server:
 
-1. **Clone Repo** `git clone git@github.com:devinhaynes/foursquare-roi.git`
-2. **Install Packages** `npm i`
-3. **Setup Env**
-   - Create .env file
-   - Add VITE_FIREBASE_API_KEY="YOUR_API_KEY"
-4. **Start app** `npm run dev`
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-## Deploy - Staging
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-N/A
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-1. `git add .`
-2. `git commit -m <commit_message>`
-3. `git push`
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Deploy - Production
+## Learn More
 
-N/A
+To learn more about Next.js, take a look at the following resources:
 
-1. `git tag -a <tag_number> -m <tag_message>`
-2. `git push origin <tag_number>`
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## Tech stack
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-- **FrontEnd Framework:** Svelte w/ Typescript
-- **CSS:** CSS with BEM
-- **Build Tool:** Vite
-- **CI/CD Pipeline (staging):** N/A
-- **CI/CD Pipeline (production):** N/A
-- **Staging Environment:** N/A
-- **Deployment Environment:** N/A
+## Deploy on Vercel
 
-## Color Palette
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-- **Blue:** <div style="display: flex; align-items: center; gap: 1rem"><span  style="width: 1rem; height: 1rem; background-color: hsl(237, 100%, 70%)"></span><span>hsl(237, 100%, 70%)</span></div>
-- **Black:** <div style="display: flex; align-items: center; gap: 1rem"><span  style="width: 1rem; height: 1rem; background-color: hsl(208, 37%, 20%)"></span><span>hsl(208, 37%, 20%)</span></div>
-- **Gray:** <div style="display: flex; align-items: center; gap: 1rem"><span  style="width: 1rem; height: 1rem; background-color: hsl(0, 0%, 66%)"></span><span>hsl(0, 0%, 66%)</span></div>
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
