@@ -2,11 +2,10 @@
 
 import { ChangeEvent } from "react";
 import { Selector } from "./Selector";
-import { FormKey, useROI, SelectableFormKey } from "@/lib/state";
+import { FormKey, SelectableFormKey } from "@/lib/state/types";
+import { useROI } from "@/lib/state/context";
 
 type Props = {
-  prefix?: string;
-  suffix?: string;
   label: string;
   formId: FormKey;
   disabled?: boolean;
@@ -15,8 +14,6 @@ type Props = {
 };
 
 export const Input = ({
-  prefix,
-  suffix,
   label,
   formId,
   disabled = false,
@@ -39,7 +36,7 @@ export const Input = ({
   };
 
   return (
-    <div className="flex flex-col-reverse gap-1">
+    <div className="flex flex-col-reverse gap-1 w-max">
       {" "}
       {/* The flex-col has to be reversed in order for peer functionality to work. Ref: https://tailwindcss.com/docs/hover-focus-and-other-states#styling-based-on-sibling-state */}
       <div className="peer flex flex-wrap-reverse gap-1">
@@ -56,11 +53,13 @@ export const Input = ({
           disabled={disabled}
           onChange={onValueChange}
         />
+      </div>
+      <div className="flex flex-wrap justify-between">
+        <label htmlFor={formId} className="peer-has-[:disabled]:text-zinc-600">
+          {label}
+        </label>
         {isSelector ? <Selector input={formId as SelectableFormKey} /> : null}
       </div>
-      <label htmlFor={formId} className="peer-has-[:disabled]:text-zinc-600">
-        {label}
-      </label>
     </div>
   );
 };

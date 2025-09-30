@@ -2,13 +2,21 @@
 
 import { MdSave, MdImportExport } from "react-icons/md";
 import { Input } from "./Input";
-import { useROI } from "@/lib/state";
+import { useROI } from "@/lib/state/context";
 import { Totals } from "./Totals";
 import { RiResetLeftFill } from "react-icons/ri";
 import { PageHeader } from "./PageHeader";
+import { convertStateToProperty, ntc } from "@/lib/helpers";
+import { postProperty } from "@/lib/supabase/properties";
 
 export const ROI = () => {
-  const { derived, actions } = useROI();
+  const { state, derived, actions } = useROI();
+
+  const saveProperty = async () => {
+    const property = convertStateToProperty(state);
+    await postProperty(property);
+  };
+
   return (
     <div className="font-sans flex flex-col gap-8 mb-20 items-center md:mr-4">
       <PageHeader
@@ -19,7 +27,11 @@ export const ROI = () => {
             name: "import",
             action: () => console.log("import"),
           },
-          { icon: MdSave, name: "save", action: () => console.log("save") },
+          {
+            icon: MdSave,
+            name: "save",
+            action: saveProperty,
+          },
           {
             icon: RiResetLeftFill,
             name: "reset",
@@ -31,11 +43,27 @@ export const ROI = () => {
         <div className="flex flex-col gap-4 p-4 outline-1 outline-zinc-300 dark:outline-zinc-800 bg-white dark:bg-zinc-950 rounded-lg ">
           <h2 className="text-2xl pb-8 ">House Info</h2>
           <Input formId="property_cost" label="Property cost" />{" "}
+          <div className="flex flex-col-reverse gap-1 w-max">
+            {" "}
+            {/* The flex-col has to be reversed in order for peer functionality to work. Ref: https://tailwindcss.com/docs/hover-focus-and-other-states#styling-based-on-sibling-state */}
+            <div className="peer flex flex-wrap-reverse gap-1">
+              <input
+                id="address"
+                className="bg-zinc-100 dark:bg-zinc-900 outline-1 outline-zinc-300 dark:outline-zinc-800 px-3 py-1 rounded-lg text-xl"
+                onChange={(e) => actions.setValue("address", e.target.value)}
+              />
+            </div>
+            <div className="flex flex-wrap justify-between">
+              <label htmlFor="address">Property Address</label>
+            </div>
+          </div>
         </div>
         <div className="flex flex-col gap-4 p-4 outline-1 outline-zinc-300 dark:outline-zinc-800 bg-white dark:bg-zinc-950 rounded-lg dark:border-white">
           <div className="flex justify-between">
-            <h2 className="text-2xl pb-8 ">Income</h2>
-            <p className="text-xl text-green-700">+${derived.monthly_income}</p>
+            <h2 className="text-2xl pb-8">Income</h2>
+            <p className="text-xl text-green-700">
+              {ntc(derived.monthly_income)}
+            </p>
           </div>
           <Input formId="rent" label="Rent" />{" "}
           <Input formId="additional_income" label="Additional Income" />
@@ -43,7 +71,9 @@ export const ROI = () => {
         <div className="flex flex-col gap-2 p-4 outline-1 outline-zinc-300 dark:outline-zinc-800 bg-white dark:bg-zinc-950 rounded-lg dark:border-white md:row-span-2  xl:row-span-1 xl:col-span-3 xl:grid xl:grid-cols-subgrid xl:place-items-center">
           <div className="flex justify-between col-span-3 mr-auto w-full">
             <h2 className="text-2xl pb-8 ">Expenses</h2>
-            <p className="text-xl text-red-700">-${derived.monthly_expenses}</p>
+            <p className="text-xl text-red-700">
+              {ntc(derived.monthly_expenses)}
+            </p>
           </div>
           <Input formId="vacancy" label="Vacancy" isSelector />
           <Input formId="tax" label="Tax" />{" "}
@@ -65,7 +95,7 @@ export const ROI = () => {
           <div className="flex justify-between">
             <h2 className="text-2xl pb-8 ">Investments</h2>
             <p className="text-xl text-red-700">
-              -${derived.total_investments}
+              {ntc(derived.total_investments)}
             </p>
           </div>
           <Input formId="down_payment" label="Down Payment" isSelector />{" "}

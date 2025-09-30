@@ -1,3 +1,5 @@
+import { ntc } from "@/lib/helpers";
+
 type Props = {
   label: string;
   value: number;
@@ -12,7 +14,7 @@ export const Totals = ({ label, value, type }: Props) => {
     }
 
     if (type === "currency") {
-      return `$ ${value}`;
+      return ntc(value);
     }
 
     if (type === "percentage") {
