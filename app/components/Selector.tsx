@@ -1,9 +1,5 @@
-import {
-  Selectable,
-  SelectableFormKey,
-  SelectorType,
-  useROI,
-} from "@/lib/state";
+import { Selectable, SelectableFormKey, SelectorType } from "@/lib/state/types";
+import { useROI } from "@/lib/state/context";
 import { ChangeEvent } from "react";
 
 type Props = {
@@ -23,7 +19,7 @@ export const Selector = ({ input }: Props) => {
     <form className="flex">
       <select
         onChange={onChange}
-        className="bg-zinc-100 dark:bg-zinc-900 dark:text-white p-1 rounded-lg outline-1 outline-zinc-300 dark:outline-zinc-800"
+        className="text-right p-1 dark:bg-zinc-950 w-fit"
         value={(state[input] as Selectable).selector}
       >
         <option value="auto">Auto</option>

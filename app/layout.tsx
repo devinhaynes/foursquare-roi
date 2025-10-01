@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Sidebar } from "./components/Sidebar";
-import { FormProvider } from "@/lib/state";
+import { FormProvider } from "@/lib/state/context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,14 +43,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <FormProvider>
-          <div className="flex flex-col-reverse md:flex-row gap-4 max-w-[1640px] mx-auto">
-            <div className="fixed bottom-0 w-full z-10 md:relative md:w-fit">
-              <Sidebar />
-            </div>
-            {children}
-          </div>
-        </FormProvider>
+        <FormProvider>{children}</FormProvider>
       </body>
     </html>
   );

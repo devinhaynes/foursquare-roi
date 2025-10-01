@@ -20,6 +20,7 @@ export const PageHeader = ({ header, toolbar }: Props) => {
           <button
             key={t.name + `_${i}`}
             className="hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors p-1 rounded-full"
+            onClick={t.action}
           >
             <t.icon />
           </button>
