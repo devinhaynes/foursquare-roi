@@ -2,7 +2,7 @@ import { ROIDerived } from "@/lib/state/types";
 import { SupabaseClient } from "@supabase/supabase-js";
 
 export type Property = {
-  id: string;
+  id: number;
   created_at: Date;
   address: string;
   property_cost: number;
@@ -20,6 +20,7 @@ export type Property = {
   down_payment: number;
   closing_costs: number;
   upfront_repairs: number;
+  user_id: string;
 };
 
 // This datatype represents a property before it is submitted to the DB
@@ -62,6 +63,7 @@ export const getProperty = async (
     }
     return data;
   } catch (e) {
+    if (e instanceof Error) console.log(e.message);
     return null;
   }
 };
@@ -69,13 +71,6 @@ export const getProperty = async (
 // POST property
 export const postProperty = async (property: PreflightProperty) => {
   try {
-    // const supabase = await createClient();
-    // const { data, error } = await supabase.from("properties").insert(property);
-
-    // if (error) {
-    //   console.error("Error", error.message);
-    // }
-    // return data;
     const res = await fetch("/api/properties", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -116,16 +111,16 @@ export const updateProperty = async (
 };
 
 // DELETE property
-export const deleteProperty = async (supabase: SupabaseClient, id: number) => {
+export const deleteProperties = async (ids: number[]) => {
   try {
-    const { data, error } = await supabase
-      .from("properties")
-      .delete()
-      .eq("id", id);
-    if (error) {
-      console.error("Error", error.message);
-    }
-    return data;
+    const res = await fetch("/api/properties", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(ids),
+    });
+
+    if (!res.ok) throw new Error(await res.text());
+    return res.json();
   } catch (e) {
     if (e instanceof Error) {
       console.error("Error", e.message);

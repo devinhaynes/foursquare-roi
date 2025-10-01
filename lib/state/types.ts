@@ -33,6 +33,7 @@ export type ROIField = keyof ROIState;
 
 export const defaultFormState: ROIState = {
   property_cost: 0,
+  address: "",
   rent: 0,
   additional_income: 0,
   total_income: 0,

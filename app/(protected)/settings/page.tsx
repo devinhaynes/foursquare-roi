@@ -4,10 +4,15 @@ import { useROI } from "@/lib/state/context";
 import { MdAccountCircle, MdSave } from "react-icons/md";
 
 import { RiResetLeftFill } from "react-icons/ri";
-import { PageHeader } from "../components/PageHeader";
+import { PageHeader } from "../../components/PageHeader";
+import { SignOutButton } from "./SignoutButton";
+import { createClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
+import { User } from "@supabase/supabase-js";
 
 const SettingsPage = () => {
   const { state } = useROI();
+  const [user, setUser] = useState<User | null>(null);
 
   const formatFields = (fields: string[]): string[] => {
     const formattedFields = fields.map((f) => {
@@ -21,6 +26,12 @@ const SettingsPage = () => {
   };
 
   const roiFields = formatFields(Object.keys(state));
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    supabase.auth.getUser().then((user) => setUser(user.data.user));
+  }, []);
   return (
     <div className="font-sans flex flex-col gap-8 mb-20 relative min-h-screen w-full mx-auto md:mr-4">
       <PageHeader
@@ -42,18 +53,14 @@ const SettingsPage = () => {
           <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:flex lg:gap-x-2 items-center">
             <p>Username:</p>
             <p className="px-2 py-1 dark:bg-zinc-900 rounded-lg ml-auto">
-              Person
+              {user ? user.email : "N/A"}
             </p>
           </div>
           <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center">
             <label>Avatar:</label>
             <MdAccountCircle className="text-3xl ml-auto" />
           </div>
-          <div className="grid grid-cols-subgrid col-start-2 items-center">
-            <button className="px-3 py-2 bg-[var(--foreground)] text-[var(--background)] dark:bg-zinc-900 dark:text-[var(--foreground)] rounded-lg w-fit ml-auto">
-              Sign out
-            </button>
-          </div>
+          <SignOutButton />
         </div>
         <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-rows-subgrid lg:row-span-full items-center gap-y-4">
           <h2 className="col-span-2 border-b-[1px] my-4 uppercase">Theme</h2>

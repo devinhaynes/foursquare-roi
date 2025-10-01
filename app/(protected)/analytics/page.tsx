@@ -1,5 +1,7 @@
+"use client";
+
+import { PageHeader } from "@/app/components/PageHeader";
 import { MdImportExport, MdSave } from "react-icons/md";
-import { PageHeader } from "../components/PageHeader";
 
 const AnalyticsPage = () => {
   return (

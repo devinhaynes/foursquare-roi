@@ -1,20 +1,21 @@
 "use client";
 
 import { MdSave, MdImportExport } from "react-icons/md";
-import { Input } from "./Input";
 import { useROI } from "@/lib/state/context";
-import { Totals } from "./Totals";
 import { RiResetLeftFill } from "react-icons/ri";
-import { PageHeader } from "./PageHeader";
 import { convertStateToProperty, ntc } from "@/lib/helpers";
 import { postProperty } from "@/lib/supabase/properties";
+import { PageHeader } from "@/app/components/PageHeader";
+import { Input } from "@/app/components/Input";
+import { Totals } from "@/app/components/Totals";
 
-export const ROI = () => {
+const ROI = () => {
   const { state, derived, actions } = useROI();
 
   const saveProperty = async () => {
     const property = convertStateToProperty(state);
     await postProperty(property);
+    actions.reset();
   };
 
   return (
@@ -49,6 +50,7 @@ export const ROI = () => {
             <div className="peer flex flex-wrap-reverse gap-1">
               <input
                 id="address"
+                value={state.address}
                 className="bg-zinc-100 dark:bg-zinc-900 outline-1 outline-zinc-300 dark:outline-zinc-800 px-3 py-1 rounded-lg text-xl"
                 onChange={(e) => actions.setValue("address", e.target.value)}
               />
@@ -126,3 +128,5 @@ export const ROI = () => {
     </div>
   );
 };
+
+export default ROI;
