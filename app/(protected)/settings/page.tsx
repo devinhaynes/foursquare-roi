@@ -45,18 +45,18 @@ const SettingsPage = () => {
           },
         ]}
       />
-      <div className="grid grid-cols-2 mx-auto md:mx-[unset] lg:grid-rows-5 lg:grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-y-20 md:gap-y-8 gap-x-8 w-fit mt-8 lg:gap-x-20 lg:gap-y-0 px-2 md:px-0">
+      <div className="grid grid-cols-2 mx-auto md:mx-[unset] lg:grid-rows-5 lg:grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-y-20 md:gap-y-8 gap-x-8 w-full min-[440px]:w-fit mt-8 lg:gap-x-20 lg:gap-y-0 px-2 md:px-0">
         <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-rows-subgrid lg:row-span-full items-center gap-y-4">
           <h2 className="col-span-2 border-b-[1px] mb-4 lg:my-4 uppercase">
             Profile
           </h2>
-          <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:flex lg:gap-x-2 items-center">
+          <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
             <p>Username:</p>
             <p className="px-2 py-1 dark:bg-zinc-900 rounded-lg ml-auto">
               {user ? user.email : "N/A"}
             </p>
           </div>
-          <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center">
+          <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
             <label>Avatar:</label>
             <MdAccountCircle className="text-3xl ml-auto" />
           </div>
@@ -64,7 +64,7 @@ const SettingsPage = () => {
         </div>
         <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-rows-subgrid lg:row-span-full items-center gap-y-4">
           <h2 className="col-span-2 border-b-[1px] my-4 uppercase">Theme</h2>
-          <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center">
+          <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
             <label>Theme:</label>
             <select className="bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg outline-1 outline-zinc-300 dark:outline-zinc-800">
               <option>System</option>
@@ -72,7 +72,7 @@ const SettingsPage = () => {
               <option>Dark</option>
             </select>
           </div>
-          <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center">
+          <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
             <label>Accent color:</label>
             <select className="bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg outline-1 outline-zinc-300 dark:outline-zinc-800">
               <option>Yellow</option>
@@ -85,7 +85,7 @@ const SettingsPage = () => {
           <h2 className="col-span-2 border-b-[1px] my-4 uppercase">
             Percentages
           </h2>
-          <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center">
+          <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
             <label>Vacancy:</label>
             <select
               defaultValue="total_income"
@@ -96,7 +96,7 @@ const SettingsPage = () => {
               ))}
             </select>
           </div>
-          <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center">
+          <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
             <label>Repairs (Monthly):</label>
             <select
               defaultValue="total_income"
@@ -107,7 +107,7 @@ const SettingsPage = () => {
               ))}
             </select>
           </div>
-          <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center">
+          <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
             <label>Capital Expenditures:</label>
             <select
               defaultValue="total_income"
@@ -118,7 +118,7 @@ const SettingsPage = () => {
               ))}
             </select>
           </div>
-          <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center">
+          <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
             <label>Property Management:</label>
             <select
               defaultValue="total_income"

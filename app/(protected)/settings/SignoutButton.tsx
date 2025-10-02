@@ -17,7 +17,7 @@ export const SignOutButton = () => {
   };
 
   return (
-    <div className="grid grid-cols-subgrid col-start-2 items-center">
+    <div className="grid grid-cols-subgrid min-[300px]:col-start-2 items-center">
       <button
         onClick={handleSignOut}
         className="px-3 py-2 bg-[var(--foreground)] text-[var(--background)] dark:bg-zinc-900 dark:text-[var(--foreground)] rounded-lg w-fit ml-auto"

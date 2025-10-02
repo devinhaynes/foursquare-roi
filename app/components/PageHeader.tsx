@@ -14,8 +14,8 @@ type Props = {
 export const PageHeader = ({ header, toolbar }: Props) => {
   return (
     <div className="z-4 outline-1 outline-zinc-300 dark:outline-zinc-800 bg-white dark:bg-zinc-950 flex flex-col min-[440px]:flex-row justify-between items-center w-full text-3xl px-2 py-1 sticky top-0 shadow-[-6px_0_8px_-2px_#c3c3c3] dark:shadow-[-6px_0_8px_-2px_#1e1e1e] | md:shadow-[0_0_8px_#c3c3c3] md:dark:shadow-[0_0_8px_-2px_#1e1e1e] md:rounded-lg md:top-4 ">
-      <h1 className="text-2xl uppercase">{header}</h1>
-      <div className="flex gap-2 mt-2 min-[440px]:mt-0">
+      <h1 className="text-2xl uppercase hidden min-[440px]:block">{header}</h1>
+      <div className="flex gap-2">
         {toolbar.map((t, i) => (
           <button
             key={t.name + `_${i}`}

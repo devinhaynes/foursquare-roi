@@ -51,7 +51,7 @@ const ROI = () => {
               <input
                 id="address"
                 value={state.address}
-                className="bg-zinc-100 dark:bg-zinc-900 outline-1 outline-zinc-300 dark:outline-zinc-800 px-3 py-1 rounded-lg text-xl"
+                className="bg-zinc-100 dark:bg-zinc-900 outline-1 outline-zinc-300 dark:outline-zinc-800 px-3 py-1 rounded-lg text-xl w-[150px] min-[350px]:w-auto"
                 onChange={(e) => actions.setValue("address", e.target.value)}
               />
             </div>
