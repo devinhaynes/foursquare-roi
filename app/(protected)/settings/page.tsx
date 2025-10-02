@@ -33,15 +33,21 @@ const SettingsPage = () => {
     supabase.auth.getUser().then((user) => setUser(user.data.user));
   }, []);
   return (
-    <div className="font-sans flex flex-col gap-8 mb-20 relative min-h-screen w-full mx-auto md:mr-4">
+    <div className="font-sans flex flex-col gap-8 mb-20 relative w-full mx-auto md:mr-4 md:min-w-[min(100vw,800px)]">
       <PageHeader
         header="settings"
         toolbar={[
-          { icon: MdSave, name: "save", action: () => console.log("save") },
+          {
+            icon: MdSave,
+            name: "save",
+            action: () => console.log("save"),
+            disabled: true,
+          },
           {
             icon: RiResetLeftFill,
             name: "reset",
             action: () => console.log("reset"),
+            disabled: true,
           },
         ]}
       />
@@ -56,10 +62,14 @@ const SettingsPage = () => {
               {user ? user.email : "N/A"}
             </p>
           </div>
-          <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
-            <label>Avatar:</label>
-            <MdAccountCircle className="text-3xl ml-auto" />
-          </div>
+          {user?.user_metadata && user.user_metadata.avatar_url ? (
+            <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
+              <label>Avatar:</label>
+              <MdAccountCircle className="text-3xl ml-auto" />
+            </div>
+          ) : (
+            ""
+          )}
           <SignOutButton />
         </div>
         <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-rows-subgrid lg:row-span-full items-center gap-y-4">

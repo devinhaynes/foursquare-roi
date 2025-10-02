@@ -19,7 +19,7 @@ const ROI = () => {
   };
 
   return (
-    <div className="font-sans flex flex-col gap-8 mb-20 items-center md:mr-4">
+    <div className="font-sans flex flex-col gap-8 mb-20 items-center md:pr-4">
       <PageHeader
         header="roi calculator"
         toolbar={[
@@ -27,6 +27,7 @@ const ROI = () => {
             icon: MdImportExport,
             name: "import",
             action: () => console.log("import"),
+            disabled: true,
           },
           {
             icon: MdSave,
