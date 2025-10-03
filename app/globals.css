@@ -4,6 +4,13 @@
   --background: #e4e4e7;
   --foreground: #171717;
   --default-transition-duration: 0.25s;
+  --accent: var(--foreground);
+  --accent-fore: var(--background);
+}
+
+@theme {
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-fore);
 }
 
 @theme inline {
@@ -17,6 +24,7 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --accent: var(--foreground);
   }
 }
 

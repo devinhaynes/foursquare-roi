@@ -9,10 +9,19 @@ import { SignOutButton } from "./SignoutButton";
 import { createClient } from "@/lib/supabase/client";
 import { useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
+import AccentColorPicker from "./AccentColorPicker";
+import { pickForeground } from "@/lib/helpers";
 
 const SettingsPage = () => {
   const { state } = useROI();
   const [user, setUser] = useState<User | null>(null);
+  const [accent, setAccent] = useState("#171717");
+
+  const resetSettings = () => {
+    const isDark = window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
+    const next = isDark ? "#ededed" : "#171717";
+    setAccent(next);
+  };
 
   const formatFields = (fields: string[]): string[] => {
     const formattedFields = fields.map((f) => {
@@ -32,8 +41,22 @@ const SettingsPage = () => {
 
     supabase.auth.getUser().then((user) => setUser(user.data.user));
   }, []);
+
+  // Accent color
+  useEffect(() => {
+    const saved = localStorage.getItem("accent");
+    if (saved) setAccent(saved);
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty("--accent", accent);
+    root.style.setProperty("--accent-fore", pickForeground(accent));
+    localStorage.setItem("accent", accent);
+  }, [accent]);
+
   return (
-    <div className="font-sans flex flex-col gap-8 mb-20 relative w-full mx-auto md:mr-4 md:min-w-[min(100vw,800px)]">
+    <div className="font-sans flex flex-col gap-8 mb-20 relative w-full mx-auto md:mr-4 md:min-w-[min(100vw,800px)] min-h-screen">
       <PageHeader
         header="settings"
         toolbar={[
@@ -46,8 +69,7 @@ const SettingsPage = () => {
           {
             icon: RiResetLeftFill,
             name: "reset",
-            action: () => console.log("reset"),
-            disabled: true,
+            action: resetSettings,
           },
         ]}
       />
@@ -83,12 +105,7 @@ const SettingsPage = () => {
             </select>
           </div>
           <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
-            <label>Accent color:</label>
-            <select className="bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg outline-1 outline-zinc-300 dark:outline-zinc-800">
-              <option>Yellow</option>
-              <option>Red</option>
-              <option>Blue</option>
-            </select>
+            <AccentColorPicker accent={accent} setAccent={setAccent} />
           </div>
         </div>
         <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-rows-subgrid lg:row-span-full items-center gap-y-4">
