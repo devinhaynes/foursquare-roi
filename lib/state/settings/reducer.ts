@@ -10,6 +10,7 @@ export type SettingsAction =
       type: "SET_PERCENTAGES";
       value: Partial<Percentages>;
     }
+  | { type: "SET_SETTINGS"; value: SettingsState }
   | { type: "RESET"; value: "dark" | "light" };
 
 export const reducer = (state: SettingsState, action: SettingsAction) => {
@@ -23,6 +24,8 @@ export const reducer = (state: SettingsState, action: SettingsAction) => {
         ...state,
         percentages: { ...state.percentages, ...action.value },
       };
+    case "SET_SETTINGS":
+      return state;
     case "RESET":
       return {
         ...initialSettings,

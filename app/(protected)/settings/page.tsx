@@ -10,14 +10,20 @@ import { User } from "@supabase/supabase-js";
 import AccentColorPicker from "./AccentColorPicker";
 import { PercentageSelector } from "./PercentageSelector";
 import { useSettings } from "@/lib/state/settings/context";
+import { updateSettings } from "@/lib/supabase/settings";
 
 const SettingsPage = () => {
   const [user, setUser] = useState<User | null>(null);
-  const { actions } = useSettings();
+  const { state, actions } = useSettings();
 
   const resetSettings = () => {
     const isDark = window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
     actions.reset(isDark ? "dark" : "light");
+  };
+
+  const saveSettings = () => {
+    // Save settings to DB
+    updateSettings(state);
   };
 
   useEffect(() => {
@@ -34,8 +40,7 @@ const SettingsPage = () => {
           {
             icon: MdSave,
             name: "save",
-            action: () => console.log("save"),
-            disabled: true,
+            action: saveSettings,
           },
           {
             icon: RiResetLeftFill,
@@ -94,7 +99,7 @@ const SettingsPage = () => {
             label="Property Management"
           />
           <PercentageSelector formKey="down_payment" label="Down Payment" />
-          <PercentageSelector formKey="closing_costs" label="closing Costs" />
+          <PercentageSelector formKey="closing_costs" label="Closing Costs" />
         </div>
       </div>
     </div>
