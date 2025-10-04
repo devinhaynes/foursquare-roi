@@ -25,6 +25,7 @@
     --background: #0a0a0a;
     --foreground: #ededed;
     --accent: var(--foreground);
+    --accent-fore: var(--background);
   }
 }
 

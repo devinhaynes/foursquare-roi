@@ -16,6 +16,7 @@ const SettingsPage = () => {
   const { state } = useROI();
   const [user, setUser] = useState<User | null>(null);
   const [accent, setAccent] = useState("#171717");
+  const [accentLoaded, setAccentLoaded] = useState(false);
 
   const resetSettings = () => {
     const isDark = window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
@@ -46,6 +47,7 @@ const SettingsPage = () => {
   useEffect(() => {
     const saved = localStorage.getItem("accent");
     if (saved) setAccent(saved);
+    setAccentLoaded(true);
   }, []);
 
   useEffect(() => {
@@ -105,7 +107,9 @@ const SettingsPage = () => {
             </select>
           </div>
           <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
-            <AccentColorPicker accent={accent} setAccent={setAccent} />
+            {accentLoaded && (
+              <AccentColorPicker accent={accent} setAccent={setAccent} />
+            )}
           </div>
         </div>
         <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-rows-subgrid lg:row-span-full items-center gap-y-4">
