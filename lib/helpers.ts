@@ -1,4 +1,9 @@
-import { FormKey, ROIDerived, ROIState, Selectable } from "@/lib/state/types";
+import {
+  FormKey,
+  PropertyDerivedValues,
+  PropertyState,
+  Selectable,
+} from "@/lib/state/properties/types";
 import { PreflightProperty } from "./supabase/properties";
 
 export const formatter = new Intl.NumberFormat("en-US", {
@@ -26,7 +31,7 @@ export const convertObjNumbersToCurrency = (
 };
 
 // Generate Derived values from state values
-export const derive = (state: ROIState): ROIDerived => {
+export const derive = (state: PropertyState): PropertyDerivedValues => {
   const {
     rent,
     additional_income,
@@ -78,7 +83,7 @@ export const derive = (state: ROIState): ROIDerived => {
 
 // Calculate values based on a predetermined percentage of another value
 export const recalculateAutoValue = (
-  state: ROIState,
+  state: PropertyState,
   formKey: FormKey
 ): number => {
   let newValue = (state[formKey] as Selectable).value;
@@ -108,7 +113,9 @@ export const recalculateAutoValue = (
   return parseFloat(newValue.toFixed(2));
 };
 
-export const convertStateToProperty = (state: ROIState): PreflightProperty => {
+export const convertStateToProperty = (
+  state: PropertyState
+): PreflightProperty => {
   const derivedValues = [
     "total_income",
     "total_expenses",

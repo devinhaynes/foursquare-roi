@@ -2,8 +2,8 @@
 
 import { ChangeEvent } from "react";
 import { Selector } from "./Selector";
-import { FormKey, SelectableFormKey } from "@/lib/state/types";
-import { useROI } from "@/lib/state/context";
+import { FormKey, SelectableFormKey } from "@/lib/state/properties/types";
+import { useROI } from "@/lib/state/properties/context";
 
 type Props = {
   label: string;

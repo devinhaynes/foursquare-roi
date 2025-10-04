@@ -1,5 +1,9 @@
-import { Selectable, SelectableFormKey, SelectorType } from "@/lib/state/types";
-import { useROI } from "@/lib/state/context";
+import {
+  Selectable,
+  SelectableFormKey,
+  SelectorType,
+} from "@/lib/state/properties/types";
+import { useROI } from "@/lib/state/properties/context";
 import { ChangeEvent } from "react";
 
 type Props = {

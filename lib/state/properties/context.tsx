@@ -10,17 +10,17 @@ import {
 import {
   defaultFormState,
   FormKey,
-  ROIDerived,
-  ROIState,
+  PropertyDerivedValues,
+  PropertyState,
   SelectableFormKey,
   SelectorType,
 } from "./types";
 import { reducer } from "./reducer";
-import { derive } from "../helpers";
+import { derive } from "../../helpers";
 
 type ROIContextValue = {
-  state: ROIState;
-  derived: ROIDerived;
+  state: PropertyState;
+  derived: PropertyDerivedValues;
   actions: {
     setValue: (key: FormKey, value: number | string) => void;
     setSelector: (key: SelectableFormKey, value: SelectorType) => void;
@@ -35,7 +35,7 @@ export const FormProvider = ({
   initial,
 }: {
   children: ReactNode;
-  initial?: Partial<ROIState>;
+  initial?: Partial<PropertyState>;
 }) => {
   const [state, dispatch] = useReducer(reducer, {
     ...defaultFormState,

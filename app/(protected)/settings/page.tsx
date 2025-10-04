@@ -1,8 +1,6 @@
 "use client";
 
-import { useROI } from "@/lib/state/context";
 import { MdAccountCircle, MdSave } from "react-icons/md";
-
 import { RiResetLeftFill } from "react-icons/ri";
 import { PageHeader } from "../../components/PageHeader";
 import { SignOutButton } from "./SignoutButton";
@@ -10,52 +8,23 @@ import { createClient } from "@/lib/supabase/client";
 import { useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
 import AccentColorPicker from "./AccentColorPicker";
-import { pickForeground } from "@/lib/helpers";
+import { PercentageSelector } from "./PercentageSelector";
+import { useSettings } from "@/lib/state/settings/context";
 
 const SettingsPage = () => {
-  const { state } = useROI();
   const [user, setUser] = useState<User | null>(null);
-  const [accent, setAccent] = useState("#171717");
-  const [accentLoaded, setAccentLoaded] = useState(false);
+  const { actions } = useSettings();
 
   const resetSettings = () => {
     const isDark = window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
-    const next = isDark ? "#ededed" : "#171717";
-    setAccent(next);
+    actions.reset(isDark ? "dark" : "light");
   };
-
-  const formatFields = (fields: string[]): string[] => {
-    const formattedFields = fields.map((f) => {
-      // Replace underlines with spaces and uppercase first letter or each word
-      return f
-        .split("_")
-        .map((v) => v.substring(0, 1).toUpperCase().concat(v.slice(1)))
-        .join(" ");
-    });
-    return formattedFields;
-  };
-
-  const roiFields = formatFields(Object.keys(state));
 
   useEffect(() => {
     const supabase = createClient();
 
     supabase.auth.getUser().then((user) => setUser(user.data.user));
   }, []);
-
-  // Accent color
-  useEffect(() => {
-    const saved = localStorage.getItem("accent");
-    if (saved) setAccent(saved);
-    setAccentLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    root.style.setProperty("--accent", accent);
-    root.style.setProperty("--accent-fore", pickForeground(accent));
-    localStorage.setItem("accent", accent);
-  }, [accent]);
 
   return (
     <div className="font-sans flex flex-col gap-8 mb-20 relative w-full mx-auto md:mr-4 md:min-w-[min(100vw,800px)] min-h-screen">
@@ -75,7 +44,7 @@ const SettingsPage = () => {
           },
         ]}
       />
-      <div className="grid grid-cols-2 mx-auto md:mx-[unset] lg:grid-rows-5 lg:grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-y-20 md:gap-y-8 gap-x-8 w-full min-[440px]:w-fit mt-8 lg:gap-x-20 lg:gap-y-0 px-2 md:px-0">
+      <div className="grid grid-cols-2 mx-auto md:mx-[unset] lg:grid-rows-7 lg:grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-y-20 md:gap-y-8 gap-x-8 w-full min-[440px]:w-fit mt-8 lg:gap-x-20 lg:gap-y-0 px-2 md:px-0">
         <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-rows-subgrid lg:row-span-full items-center gap-y-4">
           <h2 className="col-span-2 border-b-[1px] mb-4 lg:my-4 uppercase">
             Profile
@@ -107,59 +76,25 @@ const SettingsPage = () => {
             </select>
           </div>
           <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
-            {accentLoaded && (
-              <AccentColorPicker accent={accent} setAccent={setAccent} />
-            )}
+            <AccentColorPicker />
           </div>
         </div>
         <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-rows-subgrid lg:row-span-full items-center gap-y-4">
           <h2 className="col-span-2 border-b-[1px] my-4 uppercase">
             Percentages
           </h2>
-          <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
-            <label>Vacancy:</label>
-            <select
-              defaultValue="total_income"
-              className="bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg outline-1 outline-zinc-300 dark:outline-zinc-800"
-            >
-              {roiFields.map((f) => (
-                <option key={f}>{f}</option>
-              ))}
-            </select>
-          </div>
-          <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
-            <label>Repairs (Monthly):</label>
-            <select
-              defaultValue="total_income"
-              className="bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg outline-1 outline-zinc-300 dark:outline-zinc-800"
-            >
-              {roiFields.map((f) => (
-                <option key={f}>{f}</option>
-              ))}
-            </select>
-          </div>
-          <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
-            <label>Capital Expenditures:</label>
-            <select
-              defaultValue="total_income"
-              className="bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg outline-1 outline-zinc-300 dark:outline-zinc-800"
-            >
-              {roiFields.map((f) => (
-                <option key={f}>{f}</option>
-              ))}
-            </select>
-          </div>
-          <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
-            <label>Property Management:</label>
-            <select
-              defaultValue="total_income"
-              className="bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg outline-1 outline-zinc-300 dark:outline-zinc-800"
-            >
-              {roiFields.map((f) => (
-                <option key={f}>{f}</option>
-              ))}
-            </select>
-          </div>
+          <PercentageSelector formKey="vacancy" label="Vacancy" />
+          <PercentageSelector
+            formKey="monthly_repairs"
+            label="Repairs (Monthly)"
+          />
+          <PercentageSelector formKey="capex" label="Capital Expenditures" />
+          <PercentageSelector
+            formKey="property_management"
+            label="Property Management"
+          />
+          <PercentageSelector formKey="down_payment" label="Down Payment" />
+          <PercentageSelector formKey="closing_costs" label="closing Costs" />
         </div>
       </div>
     </div>

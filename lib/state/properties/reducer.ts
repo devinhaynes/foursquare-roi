@@ -1,8 +1,8 @@
-import { recalculateAutoValue } from "../helpers";
+import { recalculateAutoValue } from "../../helpers";
 import {
   defaultFormState,
   FormKey,
-  ROIState,
+  PropertyState,
   SelectableFormKey,
   SelectorType,
 } from "./types";
@@ -16,7 +16,7 @@ type Action =
   | { type: "SET_VALUE"; key: FormKey; value: number | string }
   | { type: "RESET" };
 
-export const reducer = (state: ROIState, action: Action) => {
+export const reducer = (state: PropertyState, action: Action) => {
   switch (action.type) {
     case "SET_SELECTOR":
       if (action.value === "auto") {
