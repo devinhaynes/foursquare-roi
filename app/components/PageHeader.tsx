@@ -4,6 +4,7 @@ type ToolbarButton = {
   icon: IconType;
   action: () => void;
   name: string;
+  disabled?: boolean;
 };
 
 type Props = {
@@ -13,16 +14,19 @@ type Props = {
 
 export const PageHeader = ({ header, toolbar }: Props) => {
   return (
-    <div className="outline-1 outline-zinc-300 dark:outline-zinc-800 bg-white dark:bg-zinc-950 flex justify-between items-center w-full text-3xl px-2 py-1 sticky top-0 shadow-[-6px_0_12px_-2px_#c3c3c3] dark:shadow-[-6px_0_12px_-2px_#1e1e1e] | md:shadow-[0_0_12px_#c3c3c3] md:dark:shadow-[0_0_8px_-2px_#1e1e1e] md:rounded-lg md:top-4 ">
-      <h1 className="text-2xl uppercase">{header}</h1>
+    <div className="z-4 outline-1 outline-accent bg-white dark:bg-zinc-950 flex flex-col min-[440px]:flex-row justify-between items-center w-full text-3xl px-2 py-1 sticky top-0 shadow-[-6px_0_8px_-2px_#c3c3c3] dark:shadow-[-6px_0_8px_-2px_#1e1e1e] | md:shadow-[0_0_8px_#c3c3c3] md:dark:shadow-[0_0_8px_-2px_#1e1e1e] md:rounded-full md:top-4 ">
+      <h1 className="text-2xl uppercase hidden min-[440px]:block pl-4">
+        {header}
+      </h1>
       <div className="flex gap-2">
         {toolbar.map((t, i) => (
           <button
             key={t.name + `_${i}`}
-            className="hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors p-1 rounded-full"
+            className="hover:bg-(--foreground) hover:text-(--background) transition-colors p-1 rounded-full min-[440px]:mx-1 min-[440px]:my-2 disabled:text-zinc-400 disabled:hover:bg-white disabled:hover:text-zinc-400 | md:m-0"
             onClick={t.action}
+            disabled={t.disabled}
           >
-            <t.icon />
+            <t.icon className="text-4xl" />
           </button>
         ))}
       </div>

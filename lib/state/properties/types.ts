@@ -5,7 +5,7 @@ export type Selectable = {
   selector: SelectorType;
 };
 
-export type ROIState = {
+export type PropertyState = {
   property_cost: number;
   address?: string;
   rent: number;
@@ -29,9 +29,9 @@ export type ROIState = {
   roi: number;
 };
 
-export type ROIField = keyof ROIState;
+export type ROIField = keyof PropertyState;
 
-export const defaultFormState: ROIState = {
+export const defaultFormState: PropertyState = {
   property_cost: 0,
   address: "",
   rent: 0,
@@ -73,7 +73,7 @@ export const defaultFormState: ROIState = {
   roi: 0,
 };
 
-export type ROIDerived = {
+export type PropertyDerivedValues = {
   monthly_income: number;
   monthly_expenses: number;
   monthly_cashflow: number;
@@ -82,7 +82,7 @@ export type ROIDerived = {
   roi: number;
 };
 
-export type FormKey = keyof ROIState;
+export type FormKey = keyof PropertyState;
 
 export type SelectableFormKey =
   | "vacancy"

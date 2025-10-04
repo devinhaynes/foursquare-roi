@@ -45,7 +45,7 @@ function PropertiesPage() {
   }, [fetchProperties]);
 
   return (
-    <div className="font-sans flex flex-col gap-8 mb-20 relative min-h-screen md:mr-4 w-full">
+    <div className="font-sans flex flex-col gap-8 mb-20 relative min-h-screen md:mr-4 md:min-w-[min(100vw,800px)]">
       <PageHeader
         header="properties"
         toolbar={[
@@ -53,12 +53,19 @@ function PropertiesPage() {
             icon: MdImportExport,
             name: "import",
             action: () => console.log("test"),
+            disabled: true,
           },
-          { icon: MdSave, name: "save", action: () => console.log("test") },
+          {
+            icon: MdSave,
+            name: "save",
+            action: () => console.log("test"),
+            disabled: true,
+          },
           {
             icon: MdDeleteSweep,
             name: "delete",
             action: deleteSelectedProperties,
+            disabled: selectedProperties.length <= 0,
           },
         ]}
       />

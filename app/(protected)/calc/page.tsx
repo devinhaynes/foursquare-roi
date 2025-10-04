@@ -1,7 +1,7 @@
 "use client";
 
 import { MdSave, MdImportExport } from "react-icons/md";
-import { useROI } from "@/lib/state/context";
+import { useROI } from "@/lib/state/properties/context";
 import { RiResetLeftFill } from "react-icons/ri";
 import { convertStateToProperty, ntc } from "@/lib/helpers";
 import { postProperty } from "@/lib/supabase/properties";
@@ -19,7 +19,7 @@ const ROI = () => {
   };
 
   return (
-    <div className="font-sans flex flex-col gap-8 mb-20 items-center md:mr-4">
+    <div className="font-sans flex flex-col gap-8 mb-20 items-center md:pr-4">
       <PageHeader
         header="roi calculator"
         toolbar={[
@@ -27,6 +27,7 @@ const ROI = () => {
             icon: MdImportExport,
             name: "import",
             action: () => console.log("import"),
+            disabled: true,
           },
           {
             icon: MdSave,
@@ -51,7 +52,7 @@ const ROI = () => {
               <input
                 id="address"
                 value={state.address}
-                className="bg-zinc-100 dark:bg-zinc-900 outline-1 outline-zinc-300 dark:outline-zinc-800 px-3 py-1 rounded-lg text-xl"
+                className="bg-zinc-100 dark:bg-zinc-900 outline-1 outline-zinc-300 dark:outline-zinc-800 px-3 py-1 rounded-lg text-xl w-[150px] min-[350px]:w-auto"
                 onChange={(e) => actions.setValue("address", e.target.value)}
               />
             </div>

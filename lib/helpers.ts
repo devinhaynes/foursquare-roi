@@ -1,4 +1,9 @@
-import { FormKey, ROIDerived, ROIState, Selectable } from "@/lib/state/types";
+import {
+  FormKey,
+  PropertyDerivedValues,
+  PropertyState,
+  Selectable,
+} from "@/lib/state/properties/types";
 import { PreflightProperty } from "./supabase/properties";
 
 export const formatter = new Intl.NumberFormat("en-US", {
@@ -26,7 +31,7 @@ export const convertObjNumbersToCurrency = (
 };
 
 // Generate Derived values from state values
-export const derive = (state: ROIState): ROIDerived => {
+export const derive = (state: PropertyState): PropertyDerivedValues => {
   const {
     rent,
     additional_income,
@@ -78,7 +83,7 @@ export const derive = (state: ROIState): ROIDerived => {
 
 // Calculate values based on a predetermined percentage of another value
 export const recalculateAutoValue = (
-  state: ROIState,
+  state: PropertyState,
   formKey: FormKey
 ): number => {
   let newValue = (state[formKey] as Selectable).value;
@@ -108,7 +113,9 @@ export const recalculateAutoValue = (
   return parseFloat(newValue.toFixed(2));
 };
 
-export const convertStateToProperty = (state: ROIState): PreflightProperty => {
+export const convertStateToProperty = (
+  state: PropertyState
+): PreflightProperty => {
   const derivedValues = [
     "total_income",
     "total_expenses",
@@ -125,3 +132,13 @@ export const convertStateToProperty = (state: ROIState): PreflightProperty => {
   );
   return property as PreflightProperty;
 };
+
+export function pickForeground(hex: string) {
+  // Simple contrast heuristic: YIQ
+  const h = hex.replace("#", "");
+  const r = parseInt(h.substring(0, 2), 16);
+  const g = parseInt(h.substring(2, 4), 16);
+  const b = parseInt(h.substring(4, 6), 16);
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  return yiq >= 140 ? "#000000" : "#ffffff";
+}

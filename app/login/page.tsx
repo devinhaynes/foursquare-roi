@@ -1,6 +1,6 @@
 import Image from "next/image";
 import logo from "../../public/logo-color.svg";
-import { login, signup } from "./actions";
+import { login } from "./actions";
 
 export default function LoginPage() {
   return (
@@ -47,12 +47,6 @@ export default function LoginPage() {
             formAction={login}
           >
             Log in
-          </button>
-          <button
-            className="px-3 py-1 outline-1 outline-zinc-300 dark:outline-zinc-800 rounded-lg dark:bg-zinc-950"
-            formAction={signup}
-          >
-            Sign up
           </button>
         </div>
       </form>

@@ -1,4 +1,4 @@
-import { ROIDerived } from "@/lib/state/types";
+import { PropertyDerivedValues } from "@/lib/state/properties/types";
 import { SupabaseClient } from "@supabase/supabase-js";
 
 export type Property = {
@@ -26,7 +26,7 @@ export type Property = {
 // This datatype represents a property before it is submitted to the DB
 export type PreflightProperty = Omit<Property, "id" | "created_at">;
 
-export type PropertyWithDerived = Property & ROIDerived;
+export type PropertyWithDerived = Property & PropertyDerivedValues;
 
 // GET all properties
 export const getProperties = async () => {
@@ -184,7 +184,7 @@ const normalizeProperty = (d: Property[]): PropertyWithDerived[] => {
   // Add derived values
   if (d) {
     return d.map((v) => {
-      const derivedValues: ROIDerived = derivePropertyValues(v);
+      const derivedValues: PropertyDerivedValues = derivePropertyValues(v);
       const newObj: PropertyWithDerived = Object.assign({}, v, derivedValues);
       return newObj;
     });
