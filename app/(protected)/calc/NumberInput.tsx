@@ -1,24 +1,17 @@
 "use client";
+// This component is used for non-currency based inputs (ie. Num of bedrooms)
 
-import { ChangeEvent } from "react";
-import { Selector } from "./Selector";
-import { FormKey, SelectableFormKey } from "@/lib/state/properties/types";
 import { useROI } from "@/lib/state/properties/context";
+import { FormKey } from "@/lib/state/properties/types";
+import { ChangeEvent } from "react";
 
 type Props = {
-  label: string;
   formId: FormKey;
   disabled?: boolean;
-  isSelector?: boolean;
-  derivedValue?: number;
+  label: string;
 };
 
-export const Input = ({
-  label,
-  formId,
-  disabled = false,
-  isSelector = false,
-}: Props) => {
+export const NumberInput = ({ formId, disabled = false, label }: Props) => {
   const { state, actions } = useROI();
 
   const onValueChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +27,6 @@ export const Input = ({
 
     actions.setValue(formId, newValue);
   };
-
   return (
     <div className="flex flex-col-reverse gap-1 w-max">
       {" "}
@@ -42,14 +34,9 @@ export const Input = ({
       <div className="peer">
         <input
           id={formId}
-          value={
-            typeof state[formId] === "number"
-              ? state[formId]
-              : typeof state[formId] === "object"
-              ? state[formId].value
-              : 0
-          }
-          className="bg-zinc-100 dark:bg-zinc-900 outline-1 outline-zinc-300 dark:outline-zinc-800 px-3 py-1 rounded-lg text-xl w-[150px] min-[350px]:w-auto"
+          defaultValue={0}
+          type="number"
+          className="bg-zinc-100 dark:bg-zinc-900 outline-1 outline-zinc-300 dark:outline-zinc-800 px-3 py-1 rounded-lg text-xl w-[8ch]"
           disabled={disabled}
           onChange={onValueChange}
         />
@@ -58,7 +45,6 @@ export const Input = ({
         <label htmlFor={formId} className="peer-has-[:disabled]:text-zinc-600">
           {label}
         </label>
-        {isSelector ? <Selector input={formId as SelectableFormKey} /> : null}
       </div>
     </div>
   );

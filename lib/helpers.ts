@@ -142,3 +142,11 @@ export function pickForeground(hex: string) {
   const yiq = (r * 299 + g * 587 + b * 114) / 1000;
   return yiq >= 140 ? "#000000" : "#ffffff";
 }
+
+export const formatField = (field: string): string => {
+  // Replace underlines with spaces and uppercase first letter or each word
+  return field
+    .split("_")
+    .map((v) => v.substring(0, 1).toUpperCase().concat(v.slice(1)))
+    .join(" ");
+};

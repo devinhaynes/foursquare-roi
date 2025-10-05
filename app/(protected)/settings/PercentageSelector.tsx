@@ -1,5 +1,6 @@
 "use client";
 
+import { formatField } from "@/lib/helpers";
 import { useROI } from "@/lib/state/properties/context";
 import { SelectableFormKey } from "@/lib/state/properties/types";
 import { useSettings } from "@/lib/state/settings/context";
@@ -13,14 +14,6 @@ type Props = {
 export const PercentageSelector = ({ formKey, label }: Props) => {
   const { state: propertyState } = useROI();
   const { state: settingsState, actions } = useSettings();
-
-  const formatField = (field: string): string => {
-    // Replace underlines with spaces and uppercase first letter or each word
-    return field
-      .split("_")
-      .map((v) => v.substring(0, 1).toUpperCase().concat(v.slice(1)))
-      .join(" ");
-  };
 
   function handleSelectionChange(e: ChangeEvent<HTMLSelectElement>) {
     e.preventDefault();

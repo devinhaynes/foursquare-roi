@@ -5,6 +5,9 @@ export type Property = {
   id: number;
   created_at: Date;
   address: string;
+  bedrooms: string | null;
+  bathrooms: string | null;
+  sqft: string | null;
   property_cost: number;
   rent: number;
   additional_income: number;

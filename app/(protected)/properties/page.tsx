@@ -27,6 +27,9 @@ function PropertiesPage() {
           "roi",
           "id",
           "created_at",
+          "bedrooms",
+          "bathrooms",
+          "sqft",
         ]) as PropertyWithDerived
     );
     setProperties(list);

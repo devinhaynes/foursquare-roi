@@ -8,6 +8,9 @@ export type Selectable = {
 export type PropertyState = {
   property_cost: number;
   address?: string;
+  bedrooms?: number;
+  bathrooms?: number;
+  sqft?: number;
   rent: number;
   additional_income: number;
   total_income: number;
