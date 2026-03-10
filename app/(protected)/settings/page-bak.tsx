@@ -26,11 +26,11 @@ const SettingsPage = () => {
     updateSettings(state);
   };
 
-  useEffect(() => {
-    const supabase = createClient();
+  // useEffect(() => {
+  //   const supabase = createClient();
 
-    supabase.auth.getUser().then((user) => setUser(user.data.user));
-  }, []);
+  //   supabase.auth.getUser().then((user) => setUser(user.data.user));
+  // }, []);
 
   return (
     <div className="font-sans flex flex-col gap-8 mb-20 relative w-full mx-auto md:mr-4 md:min-w-[min(100vw,800px)] min-h-screen">
@@ -51,7 +51,7 @@ const SettingsPage = () => {
       />
       <div className="grid grid-cols-2 mx-auto md:mx-[unset] lg:grid-rows-7 lg:grid-cols-[repeat(auto-fit,minmax(0,1fr))] gap-y-20 md:gap-y-8 gap-x-8 w-full min-[440px]:w-fit mt-8 lg:gap-x-20 lg:gap-y-0 px-2 md:px-0">
         <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-rows-subgrid lg:row-span-full items-center gap-y-4">
-          <h2 className="col-span-2 border-b-[1px] mb-4 lg:my-4 uppercase">
+          <h2 className="col-span-2 border-b mb-4 lg:my-4 uppercase">
             Profile
           </h2>
           <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
@@ -71,7 +71,7 @@ const SettingsPage = () => {
           <SignOutButton />
         </div>
         <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-rows-subgrid lg:row-span-full items-center gap-y-4">
-          <h2 className="col-span-2 border-b-[1px] my-4 uppercase">Theme</h2>
+          <h2 className="col-span-2 border-b my-4 uppercase">Theme</h2>
           <div className="grid min-[440px]:grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-cols-2 lg:gap-x-2 items-center gap-y-1">
             <label>Theme:</label>
             <select className="bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg outline-1 outline-zinc-300 dark:outline-zinc-800">
@@ -85,9 +85,7 @@ const SettingsPage = () => {
           </div>
         </div>
         <div className="grid grid-cols-subgrid col-span-2 lg:col-span-1 lg:grid-rows-subgrid lg:row-span-full items-center gap-y-4">
-          <h2 className="col-span-2 border-b-[1px] my-4 uppercase">
-            Percentages
-          </h2>
+          <h2 className="col-span-2 border-b my-4 uppercase">Percentages</h2>
           <PercentageSelector formKey="vacancy" label="Vacancy" />
           <PercentageSelector
             formKey="monthly_repairs"
